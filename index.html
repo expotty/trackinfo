@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИнфоТрек — персональный тренажёр по информатике</title>
+<style>
+:root{
+  --bg:#f5f7fb; --card:#fff; --text:#20263a; --muted:#68718a;
+  --primary:#5b5ce2; --primary2:#8586ff; --line:#e5e8f2;
+  --green:#16845b; --red:#c04455; --yellow:#a56a08; --soft:#eeefff;
+  --shadow:0 14px 40px rgba(35,45,90,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 17px;font-weight:700;transition:.18s}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:var(--primary);color:white}.primary:hover{background:#4849c8;transform:translateY(-1px)}
+.secondary{background:var(--soft);color:var(--primary)}.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.wrap{max-width:1120px;margin:auto;padding:22px}
+header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;font-size:21px;letter-spacing:-.5px}
+.logo{display:grid;place-items:center;width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#5b5ce2,#a4a5ff);color:white;font-size:23px}
+.header-actions{display:flex;align-items:center;gap:10px}
+.pill{padding:7px 12px;background:#e9f8f1;color:var(--green);font-size:12px;font-weight:800;border-radius:99px}
+.hero{background:linear-gradient(125deg,#27295b,#5355c8 65%,#8586ff);border-radius:28px;padding:34px;color:white;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero:after{content:"</>";position:absolute;right:36px;top:18px;font-size:110px;font-weight:900;color:#ffffff13;letter-spacing:-12px}
+.hero .eyebrow{font-size:12px;letter-spacing:1.7px;text-transform:uppercase;color:#d9d9ff;font-weight:800}
+.hero h1{font-size:clamp(28px,4vw,43px);line-height:1.12;max-width:650px;margin:12px 0}
+.hero p{color:#e6e7ff;max-width:630px;margin:0 0 22px}
+.hero button{background:white;color:#4243b5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px}
+.stat,.panel,.topic-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 5px 18px #28345a06}
+.stat .num{font-size:27px;font-weight:850;letter-spacing:-1px}.stat .label{color:var(--muted);font-size:13px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:28px 0 14px}
+h2{font-size:22px;margin:0;letter-spacing:-.5px} .sub{color:var(--muted);font-size:14px;margin-top:4px}
+.topics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.topic-card{display:flex;gap:13px;align-items:flex-start}
+.topic-icon{width:43px;height:43px;border-radius:14px;background:#f0f0ff;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.topic-card h3{font-size:15px;margin:0 0 4px}.topic-card p{font-size:13px;color:var(--muted);margin:0}
+.note{background:#fff9e9;border:1px solid #f4e5b7;color:#755315;padding:14px 16px;border-radius:14px;font-size:13px;margin-top:20px}
+.hidden{display:none!important}
+.view{margin-top:20px}
+.progress-top{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;margin-bottom:10px}
+.progress{height:8px;background:#e8eaf4;border-radius:99px;overflow:hidden;margin-bottom:22px}.progress span{height:100%;display:block;background:linear-gradient(90deg,var(--primary),var(--primary2));width:0%;transition:width .25s}
+.question{font-size:21px;font-weight:800;line-height:1.35;margin:12px 0 18px}
+.q-meta{display:flex;gap:8px;flex-wrap:wrap}.tag{background:#f0f1f8;border-radius:8px;padding:5px 9px;color:#5e6680;font-size:12px;font-weight:700}
+.q-body{color:#424b65;margin-bottom:18px}
+.code{background:#20243a;color:#e9eaff;border-radius:14px;padding:17px;overflow:auto;font:14px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;margin:14px 0}
+.options{display:grid;gap:10px}
+.option{border:1px solid var(--line);background:white;text-align:left;font-weight:600;color:var(--text);padding:14px 16px;border-radius:13px}
+.option:hover{border-color:var(--primary2);background:#fafaff}
+.option.selected{border:2px solid var(--primary);background:#f2f2ff}
+.option.correct{border-color:var(--green);background:#edfaf4}.option.wrong{border-color:var(--red);background:#fff0f2}
+.answer-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}.answer-row input{flex:1;min-width:170px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:white}
+.feedback{margin-top:15px;padding:14px;border-radius:13px;font-size:14px}
+.feedback.good{background:#eaf8f1;color:#116c4a}.feedback.bad{background:#fff0f2;color:#a52f42}
+footer{padding:30px 0 10px;text-align:center;color:#8a91a6;font-size:12px}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.big-score{font-size:44px;font-weight:900;letter-spacing:-2px}
+.chart-wrap{height:230px;position:relative}
+canvas{width:100%;height:100%}
+.topic-result{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:11px 0;font-size:14px}
+.topic-result:last-child{border:0}
+.review-item{border:1px solid var(--line);border-radius:15px;padding:17px;margin-top:12px}
+.review-item h3{font-size:15px;margin:0 0 8px}
+.review-item .solution{background:#f6f7fc;border-radius:10px;padding:12px;margin-top:10px;font-size:14px}
+.review-item .user-answer{font-size:13px;color:var(--muted)}
+.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.auth-panel{max-width:480px;margin:auto;width:100%}
+.auth-panel input{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;margin:6px 0 12px}
+.small{font-size:12px;color:var(--muted)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#242844;color:white;padding:12px 18px;border-radius:12px;box-shadow:var(--shadow);z-index:9}
+@media(max-width:760px){.wrap{padding:15px}.hero{padding:25px}.hero:after{right:10px;font-size:70px}.stats,.topics,.results-grid,.auth-grid{grid-template-columns:1fr}.header-actions .pill{display:none}.stat{padding:15px}.section-head{align-items:flex-start;flex-direction:column}.question{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><div class="logo">⌘</div><span>ИнфоТрек</span></div>
+  <div class="header-actions"><span class="pill">ТРЕНАЖЁР · 9 КЛАСС</span><button class="ghost" id="authBtn">Войти</button></div>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <div class="eyebrow">Твой персональный маршрут</div>
+    <h1>Информатика — по твоему уровню</h1>
+    <p>Пройди короткую диагностику, получи 5 заданий с адаптивной сложностью и узнай, какие темы стоит повторить перед ОГЭ.</p>
+    <button id="startBtn">Начать диагностику&nbsp; →</button>
+  </section>
+  <section class="stats">
+    <div class="stat"><div class="num">5 задач</div><div class="label">в персональной подборке</div></div>
+    <div class="stat"><div class="num">3 уровня</div><div class="label">от базового к продвинутому</div></div>
+    <div class="stat"><div class="num">Разбор</div><div class="label">решение после каждого теста</div></div>
+  </section>
+  <div class="section-head"><div><h2>Что умеет тренажёр</h2><div class="sub">Результаты влияют на следующие задания</div></div></div>
+  <div class="topics">
+    <div class="topic-card"><div class="topic-icon">🧭</div><div><h3>Диагностика знаний</h3><p>Определяет стартовый уровень по первым ответам.</p></div></div>
+    <div class="topic-card"><div class="topic-icon">🎯</div><div><h3>Персональные задания</h3><p>Подбирает следующую задачу по результатам предыдущих.</p></div></div>
+    <div class="topic-card"><div class="topic-icon">📈</div><div><h3>Анализ прогресса</h3><p>Показывает результат, темы для повторения и динамику ответов.</p></div></div>
+  </div>
+  <div class="note">Демонстрационная версия проекта: задания и результаты работают в браузере. Регистрация ниже — прототип на этом устройстве; для настоящих аккаунтов понадобится сервер и база данных.</div>
+</main>
+
+<section id="quiz" class="view hidden">
+  <div class="section-head"><div><h2 id="quizTitle">Диагностика</h2><div class="sub" id="quizSub">Ответь на вопросы, чтобы определить уровень</div></div><button class="ghost" id="quitBtn">На главную</button></div>
+  <div class="panel">
+    <div class="progress-top"><span id="progressLabel">Задание 1 из 3</span><span id="levelLabel">Диагностика</span></div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <div class="q-meta"><span class="tag" id="topicTag"></span><span class="tag" id="difficultyTag"></span></div>
+    <div class="question" id="questionText"></div>
+    <div class="q-body" id="questionBody"></div>
+    <div id="answerArea"></div>
+    <div id="feedbackArea"></div>
+    <div class="answer-row"><button class="primary" id="checkBtn">Проверить ответ</button><button class="secondary hidden" id="nextBtn">Следующее задание →</button></div>
+  </div>
+</section>
+
+<section id="results" class="view hidden">
+  <div class="section-head"><div><h2>Твой результат</h2><div class="sub">Разбор ответов и рекомендации</div></div><button class="ghost" id="homeBtn">На главную</button></div>
+  <div class="results-grid">
+    <div class="panel"><div class="sub">Правильных ответов</div><div class="big-score" id="scoreNum">0/5</div><div id="resultMessage"></div></div>
+    <div class="panel"><h2 style="font-size:17px">График результатов</h2><div class="sub">Каждая точка — одно задание</div><div class="chart-wrap"><canvas id="resultChart" width="520" height="260"></canvas></div></div>
+  </div>
+  <div class="results-grid" style="margin-top:16px">
+    <div class="panel"><h2 style="font-size:17px">По учебным темам</h2><div class="sub">Где уже получается и что повторить</div><div id="topicResults"></div></div>
+    <div class="panel"><h2 style="font-size:17px">Твоя следующая цель</h2><div id="recommendation" style="margin-top:10px"></div><button class="primary" id="againBtn" style="margin-top:18px">Пройти ещё раз</button></div>
+  </div>
+  <div class="section-head"><div><h2>Разбор каждого задания</h2><div class="sub">Правильный ответ и пошаговое объяснение</div></div></div>
+  <div id="reviewList"></div>
+  <div class="note">Чтобы хранить результаты между устройствами, видеть историю попыток и входить в аккаунт, проекту понадобится серверная часть. Сейчас данные не отправляются в интернет.</div>
+</section>
+
+<section id="auth" class="view hidden">
+  <div class="section-head"><div><h2>Личный кабинет</h2><div class="sub">Сохраняй прогресс и возвращайся к сложным темам</div></div><button class="ghost" id="authHomeBtn">На главную</button></div>
+  <div class="auth-grid">
+    <div class="hero"><div class="eyebrow">Следующий этап проекта</div><h1 style="font-size:32px">Твой прогресс — всегда под рукой</h1><p>После подключения серверной части здесь можно будет сохранять результаты, сравнивать попытки и продолжать обучение с нужного уровня.</p></div>
+    <div class="panel auth-panel">
+      <div class="q-meta"><button class="secondary" id="loginTab">Вход</button><button class="ghost" id="registerTab">Регистрация</button></div>
+      <form id="authForm" style="margin-top:18px">
+        <label for="email">Электронная почта</label><input id="email" type="email" placeholder="name@example.com" required>
+        <label for="password">Пароль</label><input id="password" type="password" minlength="6" placeholder="Не менее 6 символов" required>
+        <button class="primary" type="submit" id="authSubmit" style="width:100%">Войти</button>
+      </form>
+      <p class="small" id="authHint">Демо-режим: данные хранятся только в этом браузере. Не используй настоящий пароль.</p>
+      <button class="ghost hidden" id="logoutBtn" style="width:100%;margin-top:10px">Выйти</button>
+    </div>
+  </div>
+</section>
+<footer>ИнфоТрек · учебный прототип для проекта по информатике · 9 класс</footer>
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const questions = [
+ {id:"d1",topic:"Информация и кодирование",level:1,kind:"choice",q:"Сколько бит содержится в одном байте?",body:"Выбери один ответ.",opts:["2 бита","8 бит","10 бит","1024 бита"],a:"8 бит",why:"1 байт = 8 бит. Это базовое соотношение единиц измерения информации."},
+ {id:"d2",topic:"Системы счисления",level:1,kind:"text",q:"Переведи число 13 из десятичной системы в двоичную.",body:"Введи двоичную запись числа без пробелов.",a:["1101"],why:"13 = 8 + 4 + 1 = 2³ + 2² + 2⁰. Поэтому двоичная запись — 1101."},
+ {id:"d3",topic:"Алгоритмы",level:1,kind:"choice",q:"Что выведет программа?",body:"",code:"x = 4\\ny = 3\\nprint(x + y * 2)",opts:["14","10","11","7"],a:"10",why:"Сначала выполняется умножение: 3 × 2 = 6. Затем сложение: 4 + 6 = 10."},
+ {id:"a1",topic:"Алгоритмы",level:1,kind:"choice",q:"Какое значение выведет программа?",body:"",code:"s = 0\\nfor i in range(1, 4):\\n    s += i\\nprint(s)",opts:["3","6","7","10"],a:"6",why:"range(1, 4) даёт 1, 2, 3. Переменная s последовательно становится 1, 3, 6. Ответ: 6."},
+ {id:"a2",topic:"Системы счисления",level:2,kind:"text",q:"Какое десятичное число записано в двоичной системе как 10110?",body:"Введи число.",a:["22"],why:"10110₂ = 1×2⁴ + 0×2³ + 1×2² + 1×2¹ + 0×2⁰ = 16 + 4 + 2 = 22."},
+ {id:"a3",topic:"Логика",level:2,kind:"choice",q:"При каких значениях A выражение A ИЛИ B ложно?",body:"",opts:["Когда A и B оба ложны","Когда A истинно, B ложно","Когда A ложно, B истинно","Когда оба истинны"],a:"Когда A и B оба ложны",why:"Операция ИЛИ истинна, если хотя бы один операнд истинен. Ложной она будет только тогда, когда оба операнда ложны."},
+ {id:"b1",topic:"Алгоритмы",level:2,kind:"text",q:"Что выведет программа?",body:"Вычисли итоговое значение переменной s.",code:"s = 1\\nfor i in range(1, 5):\\n    s = s * 2\\nprint(s)",a:["16"],why:"Цикл выполняется для i = 1, 2, 3, 4 — четыре раза. Начальное значение 1 каждый раз умножается на 2: 1 → 2 → 4 → 8 → 16."},
+ {id:"b2",topic:"Информация и кодирование",level:3,kind:"text",q:"Алфавит содержит 32 символа. Сколько бит нужно для кодирования одного символа при равномерном двоичном кодировании?",body:"Введи количество бит.",a:["5"],why:"Количество бит на символ i = log₂N. Так как 2⁵ = 32, для кодирования одного символа нужно 5 бит."},
+ {id:"b3",topic:"Логика",level:3,kind:"choice",q:"Какое выражение эквивалентно НЕ (A И B)?",body:"Используй законы логики.",opts:["НЕ A И НЕ B","НЕ A ИЛИ НЕ B","A ИЛИ B","НЕ A И B"],a:"НЕ A ИЛИ НЕ B",why:"По закону де Моргана отрицание конъюнкции равно дизъюнкции отрицаний: НЕ(A И B) = НЕ A ИЛИ НЕ B."},
+ {id:"c1",topic:"Алгоритмы",level:3,kind:"text",q:"Определи значение переменной s после выполнения программы.",body:"Внимательно проследи за изменением переменных.",code:"s = 0\\nfor i in range(1, 4):\\n    for j in range(1, 3):\\n        s += i * j\\nprint(s)",a:["18"],why:"Для i=1 прибавляем 1×1 + 1×2 = 3. Для i=2 — 2×1 + 2×2 = 6. Для i=3 — 3×1 + 3×2 = 9. Всего 3 + 6 + 9 = 18."},
+ {id:"c2",topic:"Системы счисления",level:3,kind:"text",q:"Сколько единиц в двоичной записи десятичного числа 45?",body:"Введи только число.",a:["4"],why:"45 = 32 + 8 + 4 + 1, значит 45₁₀ = 101101₂. В записи четыре единицы."},
+ {id:"c3",topic:"Логика",level:3,kind:"text",q:"Сколько существует двоичных наборов (A, B, C), при которых выражение A И НЕ B истинно? Значение C может быть любым.",body:"Введи количество наборов.",a:["2"],why:"Выражение истинно, когда A=1 и B=0. Переменная C не влияет на выражение и может быть 0 или 1. Поэтому есть 2 набора."}
+];
+let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
+let user = JSON.parse(localStorage.getItem("infotrack_user")||"null");
+let users = JSON.parse(localStorage.getItem("infotrack_demo_users")||"{}");
+const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
+function show(id){["home","quiz","results","auth"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
+function start(){phase="diagnostic";pool=questions.filter(q=>q.id.startsWith("d"));index=0;answers=[];show("quiz");renderQuestion();}
+function startAdaptive(){
+ const right=answers.filter(x=>x.correct).length;
+ let level=right===3?2:right===2?2:1;
+ phase="adaptive";pool=[];let used=new Set(answers.map(x=>x.q.id));
+ for(let i=0;i<5;i++){
+   let desired=Math.min(3,level);
+   let choices=questions.filter(q=>!used.has(q.id)&&q.level===desired);
+   if(!choices.length) choices=questions.filter(q=>!used.has(q.id)&&q.level===Math.max(1,desired-1));
+   if(!choices.length) choices=questions.filter(q=>!used.has(q.id));
+   if(!choices.length) break;
+   let q=choices[0];pool.push(q);used.add(q.id);
+   // Adapt the next task according to the most recent answer.
+   if(i>0){let prev=answers[answers.length-1]; if(prev && prev.correct) level=Math.min(3,level+1); else level=Math.max(1,level-1);}
+ }
+ index=0;show("quiz");renderQuestion();
+}
+function renderQuestion(){
+ current=pool[index];selected=null;checked=false;
+ $("quizTitle").textContent=phase==="diagnostic"?"Стартовая диагностика":"Персональная подборка";
+ $("quizSub").textContent=phase==="diagnostic"?"3 коротких вопроса помогут выбрать стартовый уровень":"Следующие задания подбираются с учётом твоих ответов";
+ $("progressLabel").textContent=`Задание ${index+1} из ${pool.length}`;
+ $("levelLabel").textContent=phase==="diagnostic"?"Диагностика":`Уровень: ${difficulty(current.level)}`;
+ $("progressBar").style.width=`${index/pool.length*100}%`;
+ $("topicTag").textContent=current.topic;$("difficultyTag").textContent=difficulty(current.level);
+ $("questionText").textContent=current.q;$("questionBody").textContent=current.body||"";
+ $("answerArea").innerHTML="";
+ if(current.code){let code=document.createElement("div");code.className="code";code.textContent=current.code.replace(/\\n/g,"\n");$("answerArea").appendChild(code);}
+ if(current.kind==="choice"){
+  const list=document.createElement("div");list.className="options";
+  current.opts.forEach(opt=>{let b=document.createElement("button");b.className="option";b.textContent=opt;b.onclick=()=>{if(checked)return;selected=opt;[...list.children].forEach(x=>x.classList.toggle("selected",x===b));};list.appendChild(b);});
+  $("answerArea").appendChild(list);
+ }else{
+  const row=document.createElement("div");row.className="answer-row";row.style.marginTop="0";
+  const input=document.createElement("input");input.id="textAnswer";input.placeholder="Введи ответ";input.autocomplete="off";input.onkeydown=e=>{if(e.key==="Enter"&&!checked)checkAnswer();};row.appendChild(input);$("answerArea").appendChild(row);
+ }
+ $("feedbackArea").innerHTML="";$("checkBtn").classList.remove("hidden");$("nextBtn").classList.add("hidden");$("checkBtn").disabled=false;
+}
+function normalize(s){return String(s??"").trim().toLowerCase().replace(/\s+/g,"").replace(",",".");}
+function correctAnswer(q,ans){return (Array.isArray(q.a)?q.a:[q.a]).some(a=>normalize(a)===normalize(ans));}
+function checkAnswer(){
+ if(checked)return;
+ let ans=current.kind==="choice"?selected:$("textAnswer").value;
+ if(!String(ans??"").trim()){toast("Сначала выбери или введи ответ.");return;}
+ checked=true;let ok=correctAnswer(current,ans);
+ answers.push({q:current,answer:ans,correct:ok});
+ $("progressBar").style.width=`${(index+1)/pool.length*100}%`;
+ if(current.kind==="choice"){[...$("answerArea").querySelectorAll(".option")].forEach(b=>{if(correctAnswer(current,b.textContent))b.classList.add("correct");else if(b.textContent===ans&&!ok)b.classList.add("wrong");});}
+ $("feedbackArea").innerHTML=`<div class="feedback ${ok?"good":"bad"}">${ok?"Верно! Отличная работа.":"Пока неверно — ничего страшного, разбор будет в конце."}</div>`;
+ $("checkBtn").classList.add("hidden");$("nextBtn").classList.remove("hidden");$("nextBtn").textContent=index===pool.length-1?(phase==="diagnostic"?"Подобрать 5 заданий →":"Посмотреть результаты →"):"Следующее задание →";
+}
+function next(){
+ if(!checked)return;
+ if(index<pool.length-1){index++;renderQuestion();return;}
+ if(phase==="diagnostic")startAdaptive();else showResults();
+}
+function showResults(){
+ show("results");const correct=answers.filter(a=>a.correct).length;const total=answers.length;
+ $("scoreNum").textContent=`${correct}/${total}`;$("resultMessage").textContent=correct===total?"Прекрасно! Все ответы верны.":correct>=Math.ceil(total*.6)?"Хороший результат! Есть несколько тем для повторения.":"Это стартовая точка — разбор поможет понять, что повторить.";
+ drawChart();
+ const byTopic={};answers.forEach(a=>{if(!byTopic[a.q.topic])byTopic[a.q.topic]={n:0,r:0};byTopic[a.q.topic].n++;if(a.correct)byTopic[a.q.topic].r++;});
+ $("topicResults").innerHTML=Object.entries(byTopic).map(([t,v])=>`<div class="topic-result"><span>${t}</span><strong>${v.r}/${v.n}</strong></div>`).join("");
+ let weakest=Object.entries(byTopic).sort((a,b)=>a[1].r/a[1].n-b[1].r/b[1].n)[0];
+ const recommendation = $("recommendation");
+ if (weakest) {
+  recommendation.innerHTML = '<p>В первую очередь повтори тему <b>' + escapeHtml(weakest[0]) + '</b>.</p><p class="sub">В ней правильных ответов: ' + weakest[1].r + ' из ' + weakest[1].n + '.</p>';
+ } else {
+  recommendation.innerHTML = '<p class="sub">У тебя хороший уровень — можно двигаться дальше.</p>';
+ }
+ $("reviewList").innerHTML=answers.map((a,i)=>`<article class="review-item"><h3>${i+1}. ${a.q.q}</h3><div class="q-meta"><span class="tag">${a.q.topic}</span><span class="tag">${difficulty(a.q.level)}</span><span class="tag" style="color:${a.correct?'var(--green)':'var(--red)'}">${a.correct?'Верно':'Неверно'}</span></div>${a.q.code?`<div class="code">${a.q.code.replace(/\\n/g,"\n")}</div>`:""}<div class="user-answer">Твой ответ: <b>${escapeHtml(a.answer)}</b> · Правильный ответ: <b>${Array.isArray(a.q.a)?a.q.a[0]:a.q.a}</b></div><div class="solution"><b>Разбор решения</b><br>${a.q.why}</div></article>`).join("");
+ if(user){let history=JSON.parse(localStorage.getItem("infotrack_history")||"[]");history.push({date:new Date().toISOString(),score:correct,total,byTopic});localStorage.setItem("infotrack_history",JSON.stringify(history));}
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function drawChart(){
+ const canvas=$("resultChart"),ctx=canvas.getContext("2d"),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);
+ const pad={l:36,r:18,t:20,b:32},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;
+ ctx.font="12px system-ui";ctx.strokeStyle="#e7e9f3";ctx.fillStyle="#78809a";ctx.lineWidth=1;
+ for(let v=0;v<=1;v+=.25){let y=pad.t+ch*(1-v);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillText(`${Math.round(v*100)}%`,2,y+4);}
+ if(!answers.length)return;
+ const pts=answers.map((a,i)=>({x:answers.length===1?pad.l+cw/2:pad.l+cw*i/(answers.length-1),y:pad.t+ch*(a.correct?0:1),ok:a.correct}));
+ ctx.strokeStyle="#6869e8";ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+ pts.forEach((p,i)=>{ctx.beginPath();ctx.fillStyle=p.ok?"#16845b":"#c04455";ctx.arc(p.x,p.y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle="#68718a";ctx.fillText(`${i+1}`,p.x-3,h-8);});
+}
+function showAuth(){show("auth");updateAuthUI();}
+function updateAuthUI(){
+ $("loginTab").className=authMode==="login"?"secondary":"ghost";$("registerTab").className=authMode==="register"?"secondary":"ghost";
+ $("authSubmit").textContent=authMode==="login"?"Войти":"Создать демо-аккаунт";
+ $("authHint").textContent=user?`Вы вошли как ${user.email}. Это демонстрационный аккаунт на текущем устройстве.`:"Демо-режим: данные хранятся только в этом браузере. Не используй настоящий пароль.";
+ $("logoutBtn").classList.toggle("hidden",!user);
+}
+$("authForm").addEventListener("submit",e=>{
+ e.preventDefault();const email=$("email").value.trim().toLowerCase(),pass=$("password").value;
+ if(authMode==="register"){
+  if(users[email]){toast("Такой демо-аккаунт уже существует.");return;}
+  users[email]={password:pass};localStorage.setItem("infotrack_demo_users",JSON.stringify(users));user={email};localStorage.setItem("infotrack_user",JSON.stringify(user));toast("Демо-аккаунт создан!");
+ }else{
+  if(!users[email]||users[email].password!==pass){toast("Не удалось войти. Проверь данные или создай демо-аккаунт.");return;}
+  user={email};localStorage.setItem("infotrack_user",JSON.stringify(user));toast("Вы вошли!");
+ }
+ updateAuthUI();
+});
+$("logoutBtn").onclick=()=>{user=null;localStorage.removeItem("infotrack_user");updateAuthUI();toast("Вы вышли из аккаунта.");};
+$("startBtn").onclick=start;$("checkBtn").onclick=checkAnswer;$("nextBtn").onclick=next;
+$("quitBtn").onclick=()=>show("home");$("homeBtn").onclick=()=>show("home");$("againBtn").onclick=start;
+$("authBtn").onclick=showAuth;$("authHomeBtn").onclick=()=>show("home");
+$("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
+updateAuthUI();
+</script>
+</body>
+</html>
