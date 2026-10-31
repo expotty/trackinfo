@@ -223,16 +223,24 @@ canvas{width:100%;height:100%}
   </div>
   <div class="panel" style="margin-top:16px">
     <h2>4. Типичные ошибки</h2>
-    <div class="panel" style="margin-top:16px">
+<div class="panel" style="margin-top:16px" id="numberPractice">
   <div class="eyebrow" style="color:var(--primary)">ПРОВЕРЬ СЕБЯ</div>
-  <h2>Мини-тренировка</h2>
-  <p>Переведи двоичное число 1011₂ в десятичную систему счисления.</p>
-  <div class="answer-row" style="margin-top:16px">
-    <button class="secondary number-answer" data-answer="9">9</button>
-    <button class="secondary number-answer" data-answer="10">10</button>
-    <button class="secondary number-answer" data-answer="11">11</button>
-    <button class="secondary number-answer" data-answer="12">12</button>
+  <h2>Практика: системы счисления</h2>
+  <div class="progress-top">
+    <span id="numberQuestionCount">Задание 1 из 5</span>
+    <span id="numberScore">Баллы: 0</span>
   </div>
+  <div class="progress">
+    <span id="numberProgressBar" style="width:20%"></span>
+  </div>
+  <h3 id="numberQuestion" style="margin-top:20px"></h3>
+  <div id="numberAnswers" class="answer-row" style="flex-wrap:wrap"></div>
+  <div id="numberPracticeFeedback" style="margin-top:14px"></div>
+  <button class="primary hidden" id="numberNextBtn" style="margin-top:16px">
+    Следующее задание →
+  </button>
+  <div id="numberPracticeResult" class="hidden" style="margin-top:18px"></div>
+</div>
   <div id="numberPracticeFeedback" style="margin-top:14px"></div>
 </div>
     <ul>
