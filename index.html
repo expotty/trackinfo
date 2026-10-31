@@ -151,9 +151,16 @@ canvas{width:100%;height:100%}
 <footer>ИнфоТрек · учебный прототип для проекта по информатике · 9 класс</footer>
 </div>
 <div id="toast" class="toast hidden"></div>
-
+Сегодня
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const $ = id => document.getElementById(id);
+const SUPABASE_URL = "https://mnaekkutujypixdvriat.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_QpvQx78a9OOsHjAe2H7m7A_pbFSBVkz";
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 const questions = [
  {id:"d1",topic:"Информация и кодирование",level:1,kind:"choice",q:"Сколько бит содержится в одном байте?",body:"Выбери один ответ.",opts:["2 бита","8 бит","10 бит","1024 бита"],a:"8 бит",why:"1 байт = 8 бит. Это базовое соотношение единиц измерения информации."},
  {id:"d2",topic:"Системы счисления",level:1,kind:"text",q:"Переведи число 13 из десятичной системы в двоичную.",body:"Введи двоичную запись числа без пробелов.",a:["1101"],why:"13 = 8 + 4 + 1 = 2³ + 2² + 2⁰. Поэтому двоичная запись — 1101."},
