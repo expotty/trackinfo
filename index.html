@@ -647,16 +647,110 @@ $("theoryBtn").onclick=()=>show("theory");
 $("theoryHomeBtn").onclick=()=>show("home");
 $("numberSystemsCard").onclick=()=>show("numberSystems");
 $("numberSystemsBack").onclick=()=>show("theory");
-document.querySelectorAll(".number-answer").forEach(button=>{
-  button.onclick=()=>{
-    const feedback=$("numberPracticeFeedback");
-    if(button.dataset.answer==="11"){
-      feedback.innerHTML='<p style="color:#22a06b"><strong>Верно!</strong> 1011₂ = 11₁₀.</p><p>1 × 2³ + 0 × 2² + 1 × 2¹ + 1 × 2⁰ = 8 + 0 + 2 + 1 = 11.</p>';
-    }else{
-      feedback.innerHTML='<p style="color:#d97706"><strong>Пока неверно.</strong> Попробуй ещё раз. Разложи число по степеням двойки: 2³, 2², 2¹ и 2⁰.</p>';
-    }
-  };
-});
+const numberQuestions = [
+  {
+    question: "Переведи число 1011₂ в десятичную систему.",
+    answers: ["9", "10", "11", "12"],
+    correct: "11",
+    explanation: "1 × 2³ + 0 × 2² + 1 × 2¹ + 1 × 2⁰ = 8 + 2 + 1 = 11."
+  },
+  {
+    question: "Сколько различных цифр используется в двоичной системе?",
+    answers: ["1", "2", "8", "10"],
+    correct: "2",
+    explanation: "В двоичной системе используются только две цифры: 0 и 1."
+  },
+  {
+    question: "Переведи число 13₁₀ в двоичную систему.",
+    answers: ["1011", "1101", "1110", "1001"],
+    correct: "1101",
+    explanation: "При делении 13 на 2 получаем остатки 1, 0, 1, 1. Читаем снизу вверх: 1101₂."
+  },
+  {
+    question: "Какое наибольшее число можно записать одной цифрой в восьмеричной системе?",
+    answers: ["7", "8", "9", "15"],
+    correct: "7",
+    explanation: "В восьмеричной системе используются цифры от 0 до 7."
+  },
+  {
+    question: "Чему равно число 101₂ в десятичной системе?",
+    answers: ["3", "4", "5", "6"],
+    correct: "5",
+    explanation: "1 × 2² + 0 × 2¹ + 1 × 2⁰ = 4 + 0 + 1 = 5."
+  }
+];
+
+let numberCurrentQuestion = 0;
+let numberCorrectAnswers = 0;
+let numberAnswered = false;
+
+function renderNumberQuestion() {
+  const q = numberQuestions[numberCurrentQuestion];
+
+  $("numberQuestionCount").textContent =
+    `Задание ${numberCurrentQuestion + 1} из ${numberQuestions.length}`;
+
+  $("numberScore").textContent = `Баллы: ${numberCorrectAnswers}`;
+  $("numberProgressBar").style.width =
+    `${((numberCurrentQuestion + 1) / numberQuestions.length) * 100}%`;
+
+  $("numberQuestion").textContent = q.question;
+  $("numberPracticeFeedback").innerHTML = "";
+  $("numberPracticeResult").classList.add("hidden");
+  $("numberNextBtn").classList.add("hidden");
+
+  numberAnswered = false;
+
+  $("numberAnswers").innerHTML = q.answers.map(answer =>
+    `<button class="secondary number-answer" data-answer="${answer}">${answer}</button>`
+  ).join("");
+
+  document.querySelectorAll(".number-answer").forEach(button => {
+    button.onclick = () => {
+      if (numberAnswered) return;
+      numberAnswered = true;
+      if (button.dataset.answer === q.correct) {
+        numberCorrectAnswers++;
+        $("numberPracticeFeedback").innerHTML =
+          `<p style="color:#22a06b"><strong>Верно!</strong> ${q.explanation}</p>`;
+      } else {
+        $("numberPracticeFeedback").innerHTML =
+          `<p style="color:#d97706"><strong>Неверно.</strong> Правильный ответ: ${q.correct}.</p><p>${q.explanation}</p>`;
+      }
+      $("numberScore").textContent = `Баллы: ${numberCorrectAnswers}`;
+      $("numberNextBtn").textContent =
+        numberCurrentQuestion === numberQuestions.length - 1
+          ? "Посмотреть результат"
+          : "Следующее задание →";
+      $("numberNextBtn").classList.remove("hidden");
+    };
+  });
+}
+$("numberNextBtn").onclick = () => {
+  if (numberCurrentQuestion < numberQuestions.length - 1) {
+    numberCurrentQuestion++;
+    renderNumberQuestion();
+  } else {
+    $("numberQuestion").textContent = "Тренировка завершена!";
+    $("numberAnswers").innerHTML = "";
+    $("numberPracticeFeedback").innerHTML = "";
+    $("numberNextBtn").classList.add("hidden");
+    $("numberProgressBar").style.width = "100%";
+    $("numberPracticeResult").innerHTML =
+      `<h3>Твой результат: ${numberCorrectAnswers} из ${numberQuestions.length}</h3>
+       <p>${numberCorrectAnswers === 5
+         ? "Отличная работа! Все задания выполнены правильно."
+         : "Хороший старт! Повтори объяснения и попробуй ещё раз."}</p>
+       <button class="primary" id="numberRestartBtn">Пройти ещё раз</button>`;
+    $("numberPracticeResult").classList.remove("hidden");
+    $("numberRestartBtn").onclick = () => {
+      numberCurrentQuestion = 0;
+      numberCorrectAnswers = 0;
+      renderNumberQuestion();
+    };
+  }
+};
+renderNumberQuestion();
 $("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
 updateAuthUI();
 </script>
