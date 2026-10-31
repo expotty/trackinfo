@@ -250,7 +250,24 @@ function showResults(){
   recommendation.innerHTML = '<p class="sub">У тебя хороший уровень — можно двигаться дальше.</p>';
  }
  $("reviewList").innerHTML=answers.map((a,i)=>`<article class="review-item"><h3>${i+1}. ${a.q.q}</h3><div class="q-meta"><span class="tag">${a.q.topic}</span><span class="tag">${difficulty(a.q.level)}</span><span class="tag" style="color:${a.correct?'var(--green)':'var(--red)'}">${a.correct?'Верно':'Неверно'}</span></div>${a.q.code?`<div class="code">${a.q.code.replace(/\\n/g,"\n")}</div>`:""}<div class="user-answer">Твой ответ: <b>${escapeHtml(a.answer)}</b> · Правильный ответ: <b>${Array.isArray(a.q.a)?a.q.a[0]:a.q.a}</b></div><div class="solution"><b>Разбор решения</b><br>${a.q.why}</div></article>`).join("");
- if(user){let history=JSON.parse(localStorage.getItem("infotrack_history")||"[]");history.push({date:new Date().toISOString(),score:correct,total,byTopic});localStorage.setItem("infotrack_history",JSON.stringify(history));}
+if(user){
+ supabaseClient
+  .from("test_results")
+  .insert({
+   user_id: user.id,
+   score: correct,
+   total_questions: total,
+   topic_results: byTopic
+  })
+  .then(({error})=>{
+   if(error){
+    console.error("Ошибка сохранения результата:",error);
+    toast("Не удалось сохранить результат в аккаунте.");
+   }else{
+    toast("Результат сохранён в аккаунте!");
+   }
+  });
+}
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function drawChart(){
