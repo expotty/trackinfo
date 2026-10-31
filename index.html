@@ -274,23 +274,47 @@ function shuffle(array){
 }
 function start(){
  phase="diagnostic";
- pool=shuffle(questions.filter(q=>q.id.startsWith("d")));
+ const easy=shuffle(questions.filter(q=>q.level===1)).slice(0,2);
+ const medium=shuffle(questions.filter(q=>q.level===2)).slice(0,2);
+ const hard=shuffle(questions.filter(q=>q.level===3)).slice(0,1);
+ pool=shuffle([...easy,...medium,...hard]);
  index=0;
  answers=[];
  show("quiz");
  renderQuestion();
 }
 function startAdaptive(){
- const right=answers.filter(x=>x.correct).length;
- let level=right>=2?2:1;
  phase="adaptive";
+ const easy=answers.filter(x=>x.q.level===1);
+ const medium=answers.filter(x=>x.q.level===2);
+ const hard=answers.filter(x=>x.q.level===3);
+ const easyRight=easy.filter(x=>x.correct).length;
+ const mediumRight=medium.filter(x=>x.correct).length;
+ const hardRight=hard.filter(x=>x.correct).length;
+ let levels;
+ if(easyRight<=1){
+  // Есть трудности с базовым уровнем
+  levels=[1,1,1,2,2];
+ }else if(mediumRight<=1){
+  // Базовый уровень освоен, средний требует повторения
+  levels=[2,2,2,3,3];
+ }else if(hardRight===0){
+  // Лёгкий и средний уровни освоены, сложный требует практики
+  levels=[3,3,2,2,2];
+ }else{
+  // Все уровни пройдены успешно
+  levels=[3,3,3,2,2];
+ }
  pool=[];
  let used=new Set(answers.map(x=>x.q.id));
- const levels=[level,level,level,Math.min(3,level+1),Math.min(3,level+1)];
  for(const desired of levels){
-  let choices=shuffle(questions.filter(q=>!used.has(q.id)&&q.level===desired));
+  let choices=shuffle(
+   questions.filter(q=>!used.has(q.id)&&q.level===desired)
+  );
   if(!choices.length){
-   choices=shuffle(questions.filter(q=>!used.has(q.id)));
+   choices=shuffle(
+    questions.filter(q=>!used.has(q.id))
+   );
   }
   if(!choices.length) break;
   const q=choices[0];
@@ -304,7 +328,7 @@ function startAdaptive(){
 function renderQuestion(){
  current=pool[index];selected=null;checked=false;
  $("quizTitle").textContent=phase==="diagnostic"?"Стартовая диагностика":"Персональная подборка";
- $("quizSub").textContent=phase==="diagnostic"?"3 коротких вопроса помогут выбрать стартовый уровень":"Следующие задания подбираются с учётом твоих ответов";
+ $("quizSub").textContent=phase==="diagnostic"?"5 случайных вопросов помогут определить твой стартовый уровень":"Следующие задания подбираются с учётом твоих ответов";
  $("progressLabel").textContent=`Задание ${index+1} из ${pool.length}`;
  $("levelLabel").textContent=phase==="diagnostic"?"Диагностика":`Уровень: ${difficulty(current.level)}`;
  $("progressBar").style.width=`${index/pool.length*100}%`;
