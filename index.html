@@ -145,7 +145,13 @@ canvas{width:100%;height:100%}
       </form>
       <p class="small" id="authHint">Демо-режим: данные хранятся только в этом браузере. Не используй настоящий пароль.</p>
       <button class="ghost hidden" id="logoutBtn" style="width:100%;margin-top:10px">Выйти</button>
-    </div>
+    <div id="historyPanel" style="margin-top:24px">
+  <h2 style="font-size:20px">История прохождений</h2>
+  <p class="sub">Твои предыдущие результаты</p>
+  <div id="historyList">
+    <p class="sub">Здесь пока нет результатов.</p>
+  </div>
+</div>
   </div>
 </section>
 <footer>ИнфоТрек · учебный прототип для проекта по информатике · 9 класс</footer>
@@ -280,7 +286,44 @@ function drawChart(){
  ctx.strokeStyle="#6869e8";ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
  pts.forEach((p,i)=>{ctx.beginPath();ctx.fillStyle=p.ok?"#16845b":"#c04455";ctx.arc(p.x,p.y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle="#68718a";ctx.fillText(`${i+1}`,p.x-3,h-8);});
 }
-function showAuth(){show("auth");updateAuthUI();}
+async function loadHistory(){
+ if(!user) return;
+ const historyList=$("historyList");
+ historyList.innerHTML='<p class="sub">Загружаем историю...</p>';
+ const {data,error}=await supabaseClient
+  .from("test_results")
+  .select("id, score, total_questions, topic_results, created_at")
+  .eq("user_id",user.id)
+  .order("created_at",{ascending:false});
+ if(error){
+  console.error("Ошибка загрузки истории:",error);
+  historyList.innerHTML='<p class="sub">Не удалось загрузить историю.</p>';
+  return;
+ }
+ if(!data || data.length===0){
+  historyList.innerHTML='<p class="sub">Здесь пока нет результатов.</p>';
+  return;
+ }
+ historyList.innerHTML=data.map(item=>{
+  const date=new Date(item.created_at).toLocaleString("ru-RU",{
+   day:"2-digit",month:"long",year:"numeric",
+   hour:"2-digit",minute:"2-digit"
+  });
+  const percent=Math.round(item.score/item.total_questions*100);
+  return `
+   <div class="panel" style="margin-top:12px;padding:14px">
+    <p><strong>${date}</strong></p>
+    <p>Результат: ${item.score} из ${item.total_questions}</p>
+    <p>Правильных ответов: ${percent}%</p>
+   </div>
+  `;
+ }).join("");
+}
+function showAuth(){
+ show("auth");
+ updateAuthUI();
+ if(user) loadHistory();
+}
 function updateAuthUI(){
  $("loginTab").className=authMode==="login"?"secondary":"ghost";
  $("registerTab").className=authMode==="register"?"secondary":"ghost";
@@ -290,6 +333,7 @@ function updateAuthUI(){
   : "Войдите или создайте аккаунт, чтобы сохранять результаты на разных устройствах.";
 
  $("logoutBtn").classList.toggle("hidden",!user);
+ $("historyPanel").classList.toggle("hidden",!user);
 }
 $("authForm").addEventListener("submit",async e=>{
  e.preventDefault();
