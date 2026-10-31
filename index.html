@@ -190,12 +190,12 @@ canvas{width:100%;height:100%}
     </div>
     <button class="ghost" id="numberSystemsBack">← К теории</button>
   </div>
-  <div class="panel">
+  <div class="panel" id="ns-intro">
     <div class="eyebrow" style="color:var(--primary)">ТЕМА 01</div>
     <h1 style="font-size:30px;margin:10px 0">Что такое система счисления?</h1>
     <p>Система счисления — это способ записи чисел с помощью определённого набора символов и правил их использования.</p>
   </div>
-  <div class="panel" style="margin-top:16px">
+  <div class="panel" style="margin-top:16px" id="ns-types">
     <h2>1. Виды систем счисления</h2>
     <p>В информатике чаще всего используются позиционные системы счисления. Значение цифры в них зависит от её положения в записи числа.</p>
     <div class="topic-result"><strong>Двоичная (2)</strong><span>0, 1</span></div>
@@ -203,7 +203,7 @@ canvas{width:100%;height:100%}
     <div class="topic-result"><strong>Десятичная (10)</strong><span>0–9</span></div>
     <div class="topic-result"><strong>Шестнадцатеричная (16)</strong><span>0–9, A–F</span></div>
   </div>
-  <div class="panel" style="margin-top:16px">
+  <div class="panel" style="margin-top:16px" id="ns-to-decimal">
     <h2>2. Как перевести число в десятичную систему?</h2>
     <p>Каждая цифра умножается на основание системы счисления в степени, соответствующей её позиции. Нумерация разрядов начинается с нуля справа.</p>
     <div class="code">1011₂ = 1 · 2³ + 0 · 2² + 1 · 2¹ + 1 · 2⁰
@@ -211,7 +211,7 @@ canvas{width:100%;height:100%}
 = 11₁₀</div>
     <p class="sub">Ответ: 1011₂ = 11₁₀.</p>
   </div>
-  <div class="panel" style="margin-top:16px">
+  <div class="panel" style="margin-top:16px" id="ns-to-binary">
     <h2>3. Как перевести десятичное число в двоичное?</h2>
     <p>Нужно последовательно делить число на 2 и записывать остатки. Затем прочитать остатки снизу вверх.</p>
     <div class="code">13 : 2 = 6, остаток 1
@@ -221,7 +221,7 @@ canvas{width:100%;height:100%}
 Читаем снизу вверх: 1101₂</div>
     <p class="sub">Ответ: 13₁₀ = 1101₂.</p>
   </div>
-  <div class="panel" style="margin-top:16px">
+  <div class="panel" style="margin-top:16px" id="ns-errors">
     <h2>4. Типичные ошибки</h2>
 <div class="panel" style="margin-top:16px" id="numberPractice">
   <div class="eyebrow" style="color:var(--primary)">ПРОВЕРЬ СЕБЯ</div>
