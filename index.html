@@ -264,22 +264,42 @@ let user = null;
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
 function show(id){["home","quiz","results","auth"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
-function start(){phase="diagnostic";pool=questions.filter(q=>q.id.startsWith("d"));index=0;answers=[];show("quiz");renderQuestion();}
+function shuffle(array){
+ const result=[...array];
+ for(let i=result.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [result[i],result[j]]=[result[j],result[i]];
+ }
+ return result;
+}
+function start(){
+ phase="diagnostic";
+ pool=shuffle(questions.filter(q=>q.id.startsWith("d")));
+ index=0;
+ answers=[];
+ show("quiz");
+ renderQuestion();
+}
 function startAdaptive(){
  const right=answers.filter(x=>x.correct).length;
- let level=right===3?2:right===2?2:1;
- phase="adaptive";pool=[];let used=new Set(answers.map(x=>x.q.id));
- for(let i=0;i<5;i++){
-   let desired=Math.min(3,level);
-   let choices=questions.filter(q=>!used.has(q.id)&&q.level===desired);
-   if(!choices.length) choices=questions.filter(q=>!used.has(q.id)&&q.level===Math.max(1,desired-1));
-   if(!choices.length) choices=questions.filter(q=>!used.has(q.id));
-   if(!choices.length) break;
-   let q=choices[0];pool.push(q);used.add(q.id);
-   // Adapt the next task according to the most recent answer.
-   if(i>0){let prev=answers[answers.length-1]; if(prev && prev.correct) level=Math.min(3,level+1); else level=Math.max(1,level-1);}
+ let level=right>=2?2:1;
+ phase="adaptive";
+ pool=[];
+ let used=new Set(answers.map(x=>x.q.id));
+ const levels=[level,level,level,Math.min(3,level+1),Math.min(3,level+1)];
+ for(const desired of levels){
+  let choices=shuffle(questions.filter(q=>!used.has(q.id)&&q.level===desired));
+  if(!choices.length){
+   choices=shuffle(questions.filter(q=>!used.has(q.id)));
+  }
+  if(!choices.length) break;
+  const q=choices[0];
+  pool.push(q);
+  used.add(q.id);
  }
- index=0;show("quiz");renderQuestion();
+ index=0;
+ show("quiz");
+ renderQuestion();
 }
 function renderQuestion(){
  current=pool[index];selected=null;checked=false;
@@ -432,9 +452,10 @@ $("authForm").addEventListener("submit",async e=>{
   toast("Проверь почту и подтверди регистрацию.");
   return;
  }
- user=data.user;
- updateAuthUI();
- toast(authMode==="register"?"Аккаунт создан!":"Вы вошли!");
+user=data.user;
+updateAuthUI();
+if(user) loadHistory();
+toast(authMode==="register"?"Аккаунт создан!":"Вы вошли!");
 });
 $("logoutBtn").onclick=async()=>{
  const {error}=await supabaseClient.auth.signOut();
