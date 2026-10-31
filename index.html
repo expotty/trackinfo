@@ -176,8 +176,7 @@ const questions = [
  {id:"c3",topic:"Логика",level:3,kind:"text",q:"Сколько существует двоичных наборов (A, B, C), при которых выражение A И НЕ B истинно? Значение C может быть любым.",body:"Введи количество наборов.",a:["2"],why:"Выражение истинно, когда A=1 и B=0. Переменная C не влияет на выражение и может быть 0 или 1. Поэтому есть 2 набора."}
 ];
 let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
-let user = JSON.parse(localStorage.getItem("infotrack_user")||"null");
-let users = JSON.parse(localStorage.getItem("infotrack_demo_users")||"{}");
+let user = null;
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
 function show(id){["home","quiz","results","auth"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
@@ -266,23 +265,60 @@ function drawChart(){
 }
 function showAuth(){show("auth");updateAuthUI();}
 function updateAuthUI(){
- $("loginTab").className=authMode==="login"?"secondary":"ghost";$("registerTab").className=authMode==="register"?"secondary":"ghost";
- $("authSubmit").textContent=authMode==="login"?"Войти":"Создать демо-аккаунт";
- $("authHint").textContent=user?`Вы вошли как ${user.email}. Это демонстрационный аккаунт на текущем устройстве.`:"Демо-режим: данные хранятся только в этом браузере. Не используй настоящий пароль.";
+ $("loginTab").className=authMode==="login"?"secondary":"ghost";
+ $("registerTab").className=authMode==="register"?"secondary":"ghost";
+ $("authSubmit").textContent=authMode==="login"?"Войти":"Создать аккаунт";
+ $("authHint").textContent=user
+  ? `Вы вошли как ${user.email}.`
+  : "Войдите или создайте аккаунт, чтобы сохранять результаты на разных устройствах.";
+
  $("logoutBtn").classList.toggle("hidden",!user);
 }
-$("authForm").addEventListener("submit",e=>{
- e.preventDefault();const email=$("email").value.trim().toLowerCase(),pass=$("password").value;
- if(authMode==="register"){
-  if(users[email]){toast("Такой демо-аккаунт уже существует.");return;}
-  users[email]={password:pass};localStorage.setItem("infotrack_demo_users",JSON.stringify(users));user={email};localStorage.setItem("infotrack_user",JSON.stringify(user));toast("Демо-аккаунт создан!");
- }else{
-  if(!users[email]||users[email].password!==pass){toast("Не удалось войти. Проверь данные или создай демо-аккаунт.");return;}
-  user={email};localStorage.setItem("infotrack_user",JSON.stringify(user));toast("Вы вошли!");
+$("authForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const email=$("email").value.trim().toLowerCase();
+ const pass=$("password").value;
+ if(!email || !pass){
+  toast("Заполни все поля.");
+  return;
  }
+ const {data,error}=authMode==="register"
+  ? await supabaseClient.auth.signUp({email,password:pass})
+  : await supabaseClient.auth.signInWithPassword({email,password:pass});
+ if(error){
+  toast("Ошибка: "+error.message);
+  return;
+ }
+ if(authMode==="register" && !data.session){
+  toast("Проверь почту и подтверди регистрацию.");
+  return;
+ }
+ user=data.user;
+ updateAuthUI();
+ toast(authMode==="register"?"Аккаунт создан!":"Вы вошли!");
+});
+$("logoutBtn").onclick=async()=>{
+ const {error}=await supabaseClient.auth.signOut();
+ if(error){
+  toast("Ошибка выхода: "+error.message);
+  return;
+ }
+ user=null;
+ updateAuthUI();
+ toast("Вы вышли из аккаунта.");
+};
+supabaseClient.auth.onAuthStateChange((_event,session)=>{
+ user=session?.user || null;
  updateAuthUI();
 });
-$("logoutBtn").onclick=()=>{user=null;localStorage.removeItem("infotrack_user");updateAuthUI();toast("Вы вышли из аккаунта.");};
+supabaseClient.auth.getSession().then(({data,error})=>{
+ if(error){
+  toast("Не удалось проверить авторизацию.");
+  return;
+ }
+ user=data.session?.user || null;
+ updateAuthUI();
+});
 $("startBtn").onclick=start;$("checkBtn").onclick=checkAnswer;$("nextBtn").onclick=next;
 $("quitBtn").onclick=()=>show("home");$("homeBtn").onclick=()=>show("home");$("againBtn").onclick=start;
 $("authBtn").onclick=showAuth;$("authHomeBtn").onclick=()=>show("home");
