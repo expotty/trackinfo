@@ -639,6 +639,16 @@ $("theoryBtn").onclick=()=>show("theory");
 $("theoryHomeBtn").onclick=()=>show("home");
 $("numberSystemsCard").onclick=()=>show("numberSystems");
 $("numberSystemsBack").onclick=()=>show("theory");
+document.querySelectorAll(".number-answer").forEach(button=>{
+  button.onclick=()=>{
+    const feedback=$("numberPracticeFeedback");
+    if(button.dataset.answer==="11"){
+      feedback.innerHTML='<p style="color:#22a06b"><strong>Верно!</strong> 1011₂ = 11₁₀.</p><p>1 × 2³ + 0 × 2² + 1 × 2¹ + 1 × 2⁰ = 8 + 0 + 2 + 1 = 11.</p>';
+    }else{
+      feedback.innerHTML='<p style="color:#d97706"><strong>Пока неверно.</strong> Попробуй ещё раз. Разложи число по степеням двойки: 2³, 2², 2¹ и 2⁰.</p>';
+    }
+  };
+});
 $("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
 updateAuthUI();
 </script>
