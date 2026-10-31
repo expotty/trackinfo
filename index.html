@@ -106,67 +106,6 @@ canvas{width:100%;height:100%}
   </div>
 </main>
 <section id="theory" class="view hidden">
-  <section id="numberSystems" class="view hidden">
-  <div class="section-head">
-    <div>
-      <h2>Системы счисления</h2>
-      <div class="sub">Теоретический материал · ОГЭ по информатике</div>
-    </div>
-    <button class="ghost" id="numberSystemsBack">← К теории</button>
-  </div>
-  <div class="panel">
-    <div class="eyebrow" style="color:var(--primary)">ТЕМА 01</div>
-    <h1 style="font-size:30px;margin:10px 0">Что такое система счисления?</h1>
-    <p>Система счисления — это способ записи чисел с помощью определённого набора символов и правил их использования.</p>
-  </div>
-  <div class="panel" style="margin-top:16px">
-    <h2>1. Виды систем счисления</h2>
-    <p>В информатике чаще всего используются позиционные системы счисления. Значение цифры в них зависит от её положения в записи числа.</p>
-    <div class="topic-result">
-      <strong>Двоичная (2)</strong>
-      <span>0, 1</span>
-    </div>
-    <div class="topic-result">
-      <strong>Восьмеричная (8)</strong>
-      <span>0–7</span>
-    </div>
-    <div class="topic-result">
-      <strong>Десятичная (10)</strong>
-      <span>0–9</span>
-    </div>
-    <div class="topic-result">
-      <strong>Шестнадцатеричная (16)</strong>
-      <span>0–9, A–F</span>
-    </div>
-  </div>
-  <div class="panel" style="margin-top:16px">
-    <h2>2. Как перевести число в десятичную систему?</h2>
-    <p>Каждая цифра умножается на основание системы счисления в степени, соответствующей её позиции. Нумерация разрядов начинается с нуля справа.</p>
-    <div class="code">1011₂ = 1 · 2³ + 0 · 2² + 1 · 2¹ + 1 · 2⁰
-      = 8 + 0 + 2 + 1
-      = 11₁₀</div>
-    <p class="sub">Ответ: 1011₂ = 11₁₀.</p>
-  </div>
-  <div class="panel" style="margin-top:16px">
-    <h2>3. Как перевести десятичное число в двоичное?</h2>
-    <p>Нужно последовательно делить число на 2 и записывать остатки. Затем прочитать остатки снизу вверх.</p>
-    <div class="code">13 : 2 = 6, остаток 1
-6 : 2 = 3, остаток 0
-3 : 2 = 1, остаток 1
-1 : 2 = 0, остаток 1
-Читаем снизу вверх: 1101₂</div>
-    <p class="sub">Ответ: 13₁₀ = 1101₂.</p>
-  </div>
-  <div class="panel" style="margin-top:16px">
-    <h2>4. Типичные ошибки</h2>
-    <ul>
-      <li>Неправильное определение основания системы счисления.</li>
-      <li>Начало нумерации разрядов с единицы вместо нуля.</li>
-      <li>Чтение остатков сверху вниз при переводе делением.</li>
-      <li>Использование цифр, которых нет в выбранной системе.</li>
-    </ul>
-  </div>
-</section>
   <div class="section-head">
     <div>
       <h2>Теория по информатике</h2>
@@ -186,7 +125,7 @@ canvas{width:100%;height:100%}
     </div>
   </div>
   <div class="topics">
-    <div class="topic-card">
+    <div class="topic-card" id="numberSystemsCard" style="cursor:pointer">
       <div class="topic-icon">🔢 </div>
       <div>
         <h3>Системы счисления</h3>
@@ -243,7 +182,55 @@ canvas{width:100%;height:100%}
     <div class="answer-row"><button class="primary" id="checkBtn">Проверить ответ</button><button class="secondary hidden" id="nextBtn">Следующее задание →</button></div>
   </div>
 </section>
-
+<section id="numberSystems" class="view hidden">
+  <div class="section-head">
+    <div>
+      <h2>Системы счисления</h2>
+      <div class="sub">Теоретический материал · ОГЭ по информатике</div>
+    </div>
+    <button class="ghost" id="numberSystemsBack">← К теории</button>
+  </div>
+  <div class="panel">
+    <div class="eyebrow" style="color:var(--primary)">ТЕМА 01</div>
+    <h1 style="font-size:30px;margin:10px 0">Что такое система счисления?</h1>
+    <p>Система счисления — это способ записи чисел с помощью определённого набора символов и правил их использования.</p>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <h2>1. Виды систем счисления</h2>
+    <p>В информатике чаще всего используются позиционные системы счисления. Значение цифры в них зависит от её положения в записи числа.</p>
+    <div class="topic-result"><strong>Двоичная (2)</strong><span>0, 1</span></div>
+    <div class="topic-result"><strong>Восьмеричная (8)</strong><span>0–7</span></div>
+    <div class="topic-result"><strong>Десятичная (10)</strong><span>0–9</span></div>
+    <div class="topic-result"><strong>Шестнадцатеричная (16)</strong><span>0–9, A–F</span></div>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <h2>2. Как перевести число в десятичную систему?</h2>
+    <p>Каждая цифра умножается на основание системы счисления в степени, соответствующей её позиции. Нумерация разрядов начинается с нуля справа.</p>
+    <div class="code">1011₂ = 1 · 2³ + 0 · 2² + 1 · 2¹ + 1 · 2⁰
+= 8 + 0 + 2 + 1
+= 11₁₀</div>
+    <p class="sub">Ответ: 1011₂ = 11₁₀.</p>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <h2>3. Как перевести десятичное число в двоичное?</h2>
+    <p>Нужно последовательно делить число на 2 и записывать остатки. Затем прочитать остатки снизу вверх.</p>
+    <div class="code">13 : 2 = 6, остаток 1
+6 : 2 = 3, остаток 0
+3 : 2 = 1, остаток 1
+1 : 2 = 0, остаток 1
+Читаем снизу вверх: 1101₂</div>
+    <p class="sub">Ответ: 13₁₀ = 1101₂.</p>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <h2>4. Типичные ошибки</h2>
+    <ul>
+      <li>Неправильное определение основания системы счисления.</li>
+      <li>Начало нумерации разрядов с единицы вместо нуля.</li>
+      <li>Чтение остатков сверху вниз при переводе делением.</li>
+      <li>Использование цифр, которых нет в выбранной системе.</li>
+    </ul>
+  </div>
+</section>
 <section id="results" class="view hidden">
   <div class="section-head"><div><h2>Твой результат</h2><div class="sub">Разбор ответов и рекомендации</div></div><button class="ghost" id="homeBtn">На главную</button></div>
   <div class="results-grid">
@@ -257,7 +244,6 @@ canvas{width:100%;height:100%}
   <div class="section-head"><div><h2>Разбор каждого задания</h2><div class="sub">Правильный ответ и пошаговое объяснение</div></div></div>
   <div id="reviewList"></div>
 </section>
-
 <section id="auth" class="view hidden">
   <div class="section-head"><div><h2>Личный кабинет</h2><div class="sub">Сохраняй прогресс и возвращайся к сложным темам</div></div><button class="ghost" id="authHomeBtn">На главную</button></div>
   <div class="auth-grid">
