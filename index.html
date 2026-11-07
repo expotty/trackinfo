@@ -188,7 +188,7 @@ canvas{width:100%;height:100%}
         <p>Работа с данными, формулами и таблицами.</p>
       </div>
     </div>
-    <div class="topic-card">
+    <div class="topic-card" id="logicCard">
       <div class="topic-icon">🧩 </div>
       <div>
         <h3>Логика</h3>
@@ -458,6 +458,112 @@ canvas{width:100%;height:100%}
     <div id="spreadsheetPracticeFeedback"></div>
   </div>
 </section>
+<section id="logic" class="view hidden">
+  <div class="section-head">
+    <div>
+      <h2>Логика</h2>
+      <div class="sub">Теоретический материал · ОГЭ по информатике</div>
+    </div>
+    <button class="ghost" id="logicBack">← К теории</button>
+  </div>
+  <div class="panel" style="margin-bottom:16px">
+    <h2>Содержание</h2>
+    <div class="topics">
+      <button class="secondary" onclick="document.getElementById('logic-intro').scrollIntoView({behavior:'smooth'})">Введение</button>
+      <button class="secondary" onclick="document.getElementById('logic-not').scrollIntoView({behavior:'smooth'})">Операция НЕ</button>
+      <button class="secondary" onclick="document.getElementById('logic-and').scrollIntoView({behavior:'smooth'})">Операция И</button>
+      <button class="secondary" onclick="document.getElementById('logic-or').scrollIntoView({behavior:'smooth'})">Операция ИЛИ</button>
+      <button class="secondary" onclick="document.getElementById('logic-tables').scrollIntoView({behavior:'smooth'})">Таблицы истинности</button>
+      <button class="secondary" onclick="document.getElementById('logic-errors').scrollIntoView({behavior:'smooth'})">Типичные ошибки</button>
+      <button class="secondary" onclick="document.getElementById('logicPractice').scrollIntoView({behavior:'smooth'})">Практика</button>
+    </div>
+  </div>
+  <div class="panel" id="logic-intro">
+    <h3>1. Что такое логика?</h3>
+    <p>Логика — раздел информатики, изучающий способы рассуждения и правила работы с логическими выражениями.</p>
+    <p><strong>Логическое высказывание</strong> — утверждение, которое может быть истинным или ложным.</p>
+    <p>Например:</p>
+    <ul>
+      <li>«2 + 2 = 4» — истинное высказывание.</li>
+      <li>«5 меньше 3» — ложное высказывание.</li>
+    </ul>
+    <p>В информатике истинность обычно обозначают числом 1, а ложность — числом 0.</p>
+  </div>
+  <div class="panel" id="logic-not">
+    <h3>2. Операция НЕ (отрицание)</h3>
+    <p>Операция НЕ меняет значение высказывания на противоположное.</p>
+    <ul>
+      <li>Если исходное высказывание истинно, результат ложный.</li>
+      <li>Если исходное высказывание ложно, результат истинный.</li>
+    </ul>
+    <p><strong>Пример:</strong> «Сегодня идёт дождь» → НЕ(«Сегодня идёт дождь»).</p>
+    <p>Таблица:</p>
+    <table>
+      <tr><th>A</th><th>НЕ A</th></tr>
+      <tr><td>0</td><td>1</td></tr>
+      <tr><td>1</td><td>0</td></tr>
+    </table>
+  </div>
+  <div class="panel" id="logic-and">
+    <h3>3. Операция И (конъюнкция)</h3>
+    <p>Операция И даёт истинный результат только тогда, когда оба высказывания истинны.</p>
+    <p><strong>Пример:</strong> «Число больше 5 И меньше 10».</p>
+    <table>
+      <tr><th>A</th><th>B</th><th>A И B</th></tr>
+      <tr><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>1</td><td>0</td><td>0</td></tr>
+      <tr><td>1</td><td>1</td><td>1</td></tr>
+    </table>
+  </div>
+  <div class="panel" id="logic-or">
+    <h3>4. Операция ИЛИ (дизъюнкция)</h3>
+    <p>Операция ИЛИ даёт истинный результат, если хотя бы одно из высказываний истинно.</p>
+    <p><strong>Пример:</strong> «Число меньше 3 ИЛИ больше 8».</p>
+    <table>
+      <tr><th>A</th><th>B</th><th>A ИЛИ B</th></tr>
+      <tr><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>0</td><td>1</td><td>1</td></tr>
+      <tr><td>1</td><td>0</td><td>1</td></tr>
+      <tr><td>1</td><td>1</td><td>1</td></tr>
+    </table>
+  </div>
+  <div class="panel" id="logic-tables">
+    <h3>5. Таблицы истинности</h3>
+    <p>Таблица истинности показывает результат логического выражения при всех возможных значениях входящих в него переменных.</p>
+    <p>Если переменных две, существует четыре комбинации значений. Если три — восемь.</p>
+    <p>Количество комбинаций можно вычислить по формуле:</p>
+    <p><strong>2ⁿ</strong>, где n — количество переменных.</p>
+    <p><strong>Порядок выполнения операций:</strong></p>
+    <ol>
+      <li>Скобки.</li>
+      <li>НЕ.</li>
+      <li>И.</li>
+      <li>ИЛИ.</li>
+    </ol>
+  </div>
+  <div class="panel" id="logic-errors">
+    <h3>6. Типичные ошибки</h3>
+    <ul>
+      <li>Путать операции И и ИЛИ.</li>
+      <li>Считать, что ИЛИ требует истинности обоих высказываний.</li>
+      <li>Забывать, что НЕ меняет значение на противоположное.</li>
+      <li>Неправильно учитывать порядок выполнения операций.</li>
+      <li>Пропускать отдельные комбинации в таблице истинности.</li>
+    </ul>
+  </div>
+  <div class="panel" id="logicPractice">
+    <h3>Проверь себя</h3>
+    <div id="logicQuestionCount" class="sub"></div>
+    <div id="logicScore" class="sub"></div>
+    <h3 id="logicQuestion"></h3>
+    <div id="logicAnswers" class="answers"></div>
+    <div id="logicPracticeFeedback"></div>
+    <button class="secondary hidden" id="logicNextBtn">Следующий вопрос</button>
+    <div id="logicPracticeResult"></div>
+    <button class="secondary hidden" id="logicRestartBtn">Пройти ещё раз</button>
+  </div>
+</section>
 <section id="quiz" class="view hidden">
   <div class="section-head"><div><h2 id="quizTitle">Диагностика</h2><div class="sub" id="quizSub">Ответь на вопросы, чтобы определить уровень</div></div><button class="ghost" id="quitBtn">На главную</button></div>
   <div class="panel">
@@ -698,7 +804,7 @@ const questions = [
 let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
 let user = null;
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
-function show(id){["home","quiz","results","auth","theory","numberSystems","information","networks","spreadsheets"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function show(id){["home","quiz","results","auth","theory","numberSystems","information","networks","spreadsheets","logic"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
 function shuffle(array){
  const result=[...array];
@@ -953,6 +1059,8 @@ $("networksCard").onclick=()=>show("networks");
 $("networksBack").onclick=()=>show("theory");
 $("spreadsheetsCard").onclick=()=>show("spreadsheets");
 $("spreadsheetsBack").onclick=()=>show("theory");
+$("logicCard").onclick=()=>show("logic");
+$("logicBack").onclick=()=>show("theory");
 const numberQuestions = [
   {
     question: "Переведи число 1011₂ в десятичную систему.",
@@ -1177,6 +1285,110 @@ document.querySelectorAll("#spreadsheetAnswers .answer-btn").forEach(button=>{
     }
   };
 });
+const logicQuestions = [
+  {
+    question: "Какое значение принимает НЕ 1?",
+    answers: ["0", "1", "2", "Не определено"],
+    correct: 0
+  },
+  {
+    question: "Когда выражение A И B истинно?",
+    answers: [
+      "Когда истинно хотя бы одно высказывание",
+      "Когда оба высказывания истинны",
+      "Когда оба высказывания ложны",
+      "Всегда"
+    ],
+    correct: 1
+  },
+  {
+    question: "Когда выражение A ИЛИ B ложно?",
+    answers: [
+      "Когда A истинно",
+      "Когда B истинно",
+      "Когда оба высказывания ложны",
+      "Когда оба высказывания истинны"
+    ],
+    correct: 2
+  },
+  {
+    question: "Сколько строк будет в таблице истинности для трёх переменных?",
+    answers: ["3", "6", "8", "9"],
+    correct: 2
+  },
+  {
+    question: "Какая операция выполняется первой, если нет скобок?",
+    answers: ["ИЛИ", "И", "НЕ", "Все одновременно"],
+    correct: 2
+  }
+];
+let logicCurrentQuestion = 0;
+let logicCorrectAnswers = 0;
+let logicAnswered = false;
+function renderLogicQuestion() {
+  const q = logicQuestions[logicCurrentQuestion];
+  $("logicQuestionCount").textContent =
+    `Задание ${logicCurrentQuestion + 1} из ${logicQuestions.length}`;
+  $("logicScore").textContent =
+    `Баллы: ${logicCorrectAnswers}`;
+  $("logicQuestion").textContent = q.question;
+  $("logicAnswers").innerHTML = q.answers.map((answer, index) =>
+    `<button class="answer-btn" data-index="${index}">${answer}</button>`
+  ).join("");
+  $("logicPracticeFeedback").innerHTML = "";
+  $("logicNextBtn").classList.add("hidden");
+  logicAnswered = false;
+  document.querySelectorAll("#logicAnswers .answer-btn").forEach(button => {
+    button.onclick = () => {
+      if (logicAnswered) return;
+      logicAnswered = true;
+      const selected = Number(button.dataset.index);
+      const feedback = $("logicPracticeFeedback");
+      if (selected === q.correct) {
+        logicCorrectAnswers++;
+        feedback.innerHTML =
+          '<p style="color:#22a06b"><strong>Верно!</strong> Отличная работа.</p>';
+      } else {
+        feedback.innerHTML =
+          `<p style="color:#d97706"><strong>Неверно.</strong> Правильный ответ: ${q.answers[q.correct]}.</p>`;
+      }
+      $("logicScore").textContent = `Баллы: ${logicCorrectAnswers}`;
+      $("logicNextBtn").classList.remove("hidden");
+
+      $("logicNextBtn").textContent =
+        logicCurrentQuestion === logicQuestions.length - 1
+          ? "Завершить тест"
+          : "Следующий вопрос";
+    };
+  });
+}
+function finishLogicPractice() {
+  ["logicQuestionCount", "logicScore", "logicQuestion",
+   "logicAnswers", "logicPracticeFeedback", "logicNextBtn"]
+    .forEach(id => $(id).classList.add("hidden"));
+  $("logicPracticeResult").innerHTML =
+    `<h3>Тест завершён!</h3>
+     <p>Твой результат: <strong>${logicCorrectAnswers} из ${logicQuestions.length}</strong>.</p>`;
+  $("logicRestartBtn").classList.remove("hidden");
+}
+$("logicNextBtn").onclick = () => {
+  if (logicCurrentQuestion === logicQuestions.length - 1) {
+    finishLogicPractice();
+  } else {
+    logicCurrentQuestion++;
+    renderLogicQuestion();
+  }
+};
+$("logicRestartBtn").onclick = () => {
+  logicCurrentQuestion = 0;
+  logicCorrectAnswers = 0;
+  $("logicPracticeResult").innerHTML = "";
+  $("logicRestartBtn").classList.add("hidden");
+  ["logicQuestionCount", "logicScore", "logicQuestion",
+   "logicAnswers"].forEach(id => $(id).classList.remove("hidden"));
+  renderLogicQuestion();
+};
+renderLogicQuestion();
 $("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
 updateAuthUI();
 </script>
