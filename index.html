@@ -195,7 +195,7 @@ canvas{width:100%;height:100%}
         <p>Логические выражения, операции и таблицы истинности.</p>
       </div>
     </div>
-    <div class="topic-card">
+    <div class="topic-card" id="algorithmsCard">
       <div class="topic-icon">⌨️ </div>
       <div>
         <h3>Алгоритмы и программирование</h3>
@@ -564,6 +564,108 @@ canvas{width:100%;height:100%}
     <button class="secondary hidden" id="logicRestartBtn">Пройти ещё раз</button>
   </div>
 </section>
+<section id="algorithms" class="view hidden">
+  <div class="section-head">
+    <div>
+      <h2>Алгоритмы и программирование</h2>
+      <div class="sub">Теоретический материал · ОГЭ по информатике</div>
+    </div>
+    <button class="ghost" id="algorithmsBack">← К теории</button>
+  </div>
+  <div class="panel" style="margin-bottom:16px">
+    <h2>Содержание</h2>
+    <div class="topics">
+      <button class="secondary" onclick="document.getElementById('alg-intro').scrollIntoView({behavior:'smooth'})">Понятие алгоритма</button>
+      <button class="secondary" onclick="document.getElementById('alg-properties').scrollIntoView({behavior:'smooth'})">Свойства алгоритмов</button>
+      <button class="secondary" onclick="document.getElementById('alg-types').scrollIntoView({behavior:'smooth'})">Виды алгоритмов</button>
+      <button class="secondary" onclick="document.getElementById('alg-flowchart').scrollIntoView({behavior:'smooth'})">Блок-схемы</button>
+      <button class="secondary" onclick="document.getElementById('alg-variables').scrollIntoView({behavior:'smooth'})">Переменные и команды</button>
+      <button class="secondary" onclick="document.getElementById('alg-errors').scrollIntoView({behavior:'smooth'})">Типичные ошибки</button>
+      <button class="secondary" onclick="document.getElementById('algPractice').scrollIntoView({behavior:'smooth'})">Практика</button>
+    </div>
+  </div>
+  <div class="panel" id="alg-intro">
+    <h3>1. Понятие алгоритма</h3>
+    <p><strong>Алгоритм</strong> — это точная последовательность команд, которая приводит к решению определённой задачи.</p>
+    <p>Пример алгоритма приготовления чая:</p>
+    <ol>
+      <li>Налить воду в чайник.</li>
+      <li>Вскипятить воду.</li>
+      <li>Положить чай в чашку.</li>
+      <li>Залить чай кипятком.</li>
+    </ol>
+    <p>Исполнитель алгоритма — человек, компьютер или устройство, которое выполняет команды.</p>
+  </div>
+  <div class="panel" id="alg-properties">
+    <h3>2. Свойства алгоритмов</h3>
+    <ul>
+      <li><strong>Дискретность</strong> — алгоритм состоит из отдельных шагов.</li>
+      <li><strong>Определённость</strong> — каждая команда должна быть понятной и однозначной.</li>
+      <li><strong>Понятность</strong> — команды должны быть доступны исполнителю.</li>
+      <li><strong>Результативность</strong> — выполнение алгоритма должно приводить к результату за конечное число шагов.</li>
+      <li><strong>Массовость</strong> — алгоритм может применяться к целому классу похожих задач.</li>
+    </ul>
+  </div>
+  <div class="panel" id="alg-types">
+    <h3>3. Виды алгоритмов</h3>
+    <p><strong>Линейный алгоритм</strong> — команды выполняются последовательно, одна за другой.</p>
+    <p>Пример: ввести два числа, сложить их и вывести результат.</p>
+    <p><strong>Разветвляющийся алгоритм</strong> — выбор действий зависит от условия.</p>
+    <p>Пример: если число больше нуля, вывести «Положительное», иначе — «Отрицательное или ноль».</p>
+    <p><strong>Циклический алгоритм</strong> — повторение команд несколько раз.</p>
+    <p>Пример: вывести числа от 1 до 10.</p>
+  </div>
+  <div class="panel" id="alg-flowchart">
+    <h3>4. Блок-схемы</h3>
+    <p>Блок-схема — графическое представление алгоритма с помощью специальных фигур.</p>
+    <ul>
+      <li><strong>Овал</strong> — начало или конец алгоритма.</li>
+      <li><strong>Прямоугольник</strong> — выполнение действия.</li>
+      <li><strong>Ромб</strong> — проверка условия.</li>
+      <li><strong>Параллелограмм</strong> — ввод или вывод данных.</li>
+      <li><strong>Стрелки</strong> — направление выполнения алгоритма.</li>
+    </ul>
+  </div>
+  <div class="panel" id="alg-variables">
+    <h3>5. Переменные и команды</h3>
+    <p><strong>Переменная</strong> — именованная область памяти, в которой хранится значение.</p>
+    <p>Например:</p>
+    <pre><code>a = 5
+b = 3
+c = a + b
+print(c)</code></pre>
+    <p>Результат выполнения программы — <strong>8</strong>.</p>
+    <p>Основные команды:</p>
+    <ul>
+    <li><code>input()</code> — ввод данных.</li>
+      <li><code>print()</code> — вывод данных.</li>
+      <li><code>if</code> — проверка условия.</li>
+      <li><code>else</code> — действие в противном случае.</li>
+      <li><code>for</code> и <code>while</code> — организация циклов.</li>
+    </ul>
+  </div>
+  <div class="panel" id="alg-errors">
+    <h3>6. Типичные ошибки</h3>
+    <ul>
+      <li>Нарушение порядка выполнения команд.</li>
+      <li>Неправильная запись условия.</li>
+      <li>Ошибка в количестве повторений цикла.</li>
+      <li>Использование переменной до присвоения ей значения.</li>
+      <li>Неправильное понимание того, как изменяются значения переменных.</li>
+    </ul>
+  </div>
+  <div class="panel" id="algPractice">
+    <h3>Проверь себя</h3>
+    <div id="algQuestionCount" class="sub"></div>
+    <div id="algScore" class="sub"></div>
+    <h3 id="algQuestion"></h3>
+    <div id="algAnswers" class="answers"></div>
+    <div id="algPracticeFeedback"></div>
+    <button class="secondary hidden" id="algNextBtn">Следующий вопрос</button>
+    <div id="algPracticeResult"></div>
+    <button class="secondary hidden" id="algRestartBtn">Пройти ещё раз</button>
+  </div>
+</section>
 <section id="quiz" class="view hidden">
   <div class="section-head"><div><h2 id="quizTitle">Диагностика</h2><div class="sub" id="quizSub">Ответь на вопросы, чтобы определить уровень</div></div><button class="ghost" id="quitBtn">На главную</button></div>
   <div class="panel">
@@ -804,7 +906,7 @@ const questions = [
 let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
 let user = null;
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
-function show(id){["home","quiz","results","auth","theory","numberSystems","information","networks","spreadsheets","logic"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function show(id){["home","quiz","results","auth","theory","numberSystems","information","networks","spreadsheets","logic","algorithms"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
 function shuffle(array){
  const result=[...array];
@@ -1061,6 +1163,8 @@ $("spreadsheetsCard").onclick=()=>show("spreadsheets");
 $("spreadsheetsBack").onclick=()=>show("theory");
 $("logicCard").onclick=()=>show("logic");
 $("logicBack").onclick=()=>show("theory");
+$("algorithmsCard").onclick=()=>show("algorithms");
+$("algorithmsBack").onclick=()=>show("theory");
 const numberQuestions = [
   {
     question: "Переведи число 1011₂ в десятичную систему.",
@@ -1389,6 +1493,120 @@ $("logicRestartBtn").onclick = () => {
   renderLogicQuestion();
 };
 renderLogicQuestion();
+const algorithmQuestions = [
+  {
+    question: "Что такое алгоритм?",
+    answers: [
+      "Набор случайных команд",
+      "Точная последовательность команд для решения задачи",
+      "Любая компьютерная программа",
+      "Язык программирования"
+    ],
+    correct: 1
+  },
+  {
+    question: "Какое свойство означает, что алгоритм состоит из отдельных шагов?",
+    answers: [
+      "Результативность",
+      "Массовость",
+      "Дискретность",
+      "Определённость"
+    ],
+    correct: 2
+  },
+  {
+    question: "Какой вид алгоритма предполагает повторение команд?",
+    answers: [
+      "Линейный",
+      "Разветвляющийся",
+      "Циклический",
+      "Последовательный"
+    ],
+    correct: 2
+  },
+  {
+    question: "Какая фигура в блок-схеме обозначает проверку условия?",
+    answers: [
+      "Овал",
+      "Прямоугольник",
+      "Параллелограмм",
+      "Ромб"
+    ],
+    correct: 3
+  },
+  {
+    question: "Какой результат выведет программа?\na = 4\nb = 6\nprint(a + b)",
+    answers: ["4", "6", "10", "24"],
+    correct: 2
+  }
+];
+let algCurrentQuestion = 0;
+let algCorrectAnswers = 0;
+let algAnswered = false;
+function renderAlgorithmQuestion() {
+  const q = algorithmQuestions[algCurrentQuestion];
+  $("algQuestionCount").textContent =
+    `Задание ${algCurrentQuestion + 1} из ${algorithmQuestions.length}`;
+  $("algScore").textContent =
+    `Баллы: ${algCorrectAnswers}`;
+  $("algQuestion").textContent = q.question;
+  $("algAnswers").innerHTML = q.answers.map((answer, index) =>
+    `<button class="answer-btn" data-index="${index}">${answer}</button>`
+  ).join("");
+  $("algPracticeFeedback").innerHTML = "";
+  $("algNextBtn").classList.add("hidden");
+  algAnswered = false;
+  document.querySelectorAll("#algAnswers .answer-btn").forEach(button => {
+    button.onclick = () => {
+      if (algAnswered) return;
+      algAnswered = true;
+      const selected = Number(button.dataset.index);
+      const feedback = $("algPracticeFeedback");
+      if (selected === q.correct) {
+        algCorrectAnswers++;
+        feedback.innerHTML =
+          '<p style="color:#22a06b"><strong>Верно!</strong> Отличная работа.</p>';
+      } else {
+        feedback.innerHTML =
+          `<p style="color:#d97706"><strong>Неверно.</strong> Правильный ответ: ${q.answers[q.correct]}.</p>`;
+      }
+      $("algScore").textContent = `Баллы: ${algCorrectAnswers}`;
+      $("algNextBtn").classList.remove("hidden");
+      $("algNextBtn").textContent =
+        algCurrentQuestion === algorithmQuestions.length - 1
+          ? "Завершить тест"
+          : "Следующий вопрос";
+    };
+  });
+}
+function finishAlgorithmPractice() {
+  ["algQuestionCount", "algScore", "algQuestion",
+   "algAnswers", "algPracticeFeedback", "algNextBtn"]
+    .forEach(id => $(id).classList.add("hidden"));
+  $("algPracticeResult").innerHTML =
+    `<h3>Тест завершён!</h3>
+     <p>Твой результат: <strong>${algCorrectAnswers} из ${algorithmQuestions.length}</strong>.</p>`;
+  $("algRestartBtn").classList.remove("hidden");
+}
+$("algNextBtn").onclick = () => {
+  if (algCurrentQuestion === algorithmQuestions.length - 1) {
+    finishAlgorithmPractice();
+  } else {
+    algCurrentQuestion++;
+    renderAlgorithmQuestion();
+  }
+};
+$("algRestartBtn").onclick = () => {
+  algCurrentQuestion = 0;
+  algCorrectAnswers = 0;
+  $("algPracticeResult").innerHTML = "";
+  $("algRestartBtn").classList.add("hidden");
+  ["algQuestionCount", "algScore", "algQuestion",
+   "algAnswers", "algPracticeFeedback"]
+    .forEach(id => $(id).classList.remove("hidden"));
+  renderAlgorithmQuestion();
+};
+renderAlgorithmQuestion();
 $("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
 updateAuthUI();
 </script>
