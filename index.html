@@ -1018,13 +1018,40 @@ function showResults(){
  drawChart();
  const byTopic={};answers.forEach(a=>{if(!byTopic[a.q.topic])byTopic[a.q.topic]={n:0,r:0};byTopic[a.q.topic].n++;if(a.correct)byTopic[a.q.topic].r++;});
  $("topicResults").innerHTML=Object.entries(byTopic).map(([t,v])=>`<div class="topic-result"><span>${t}</span><strong>${v.r}/${v.n}</strong></div>`).join("");
- let weakest=Object.entries(byTopic).sort((a,b)=>a[1].r/a[1].n-b[1].r/b[1].n)[0];
- const recommendation = $("recommendation");
- if (weakest) {
-  recommendation.innerHTML = '<p>В первую очередь повтори тему <b>' + escapeHtml(weakest[0]) + '</b>.</p><p class="sub">В ней правильных ответов: ' + weakest[1].r + ' из ' + weakest[1].n + '.</p>';
- } else {
-  recommendation.innerHTML = '<p class="sub">У тебя хороший уровень — можно двигаться дальше.</p>';
- }
+const recommendation = $("recommendation");
+
+const topicPages = {
+  "Системы счисления": "numberSystems",
+  "Информация и кодирование": "information",
+  "Компьютерные сети": "networks",
+  "Электронные таблицы": "spreadsheets",
+  "Логика": "logic",
+  "Алгоритмы": "algorithms"
+};
+const weakTopics = Object.entries(byTopic)
+  .filter(([topic, result]) =>
+    result.r < result.n && topicPages[topic]
+  )
+  .sort((a, b) =>
+    a[1].r / a[1].n - b[1].r / b[1].n
+  );
+if (weakTopics.length) {
+  recommendation.innerHTML =
+    '<p>Рекомендуем ознакомиться с теорией по темам, ' +
+    'в которых возникли затруднения:</p>' +
+    weakTopics.map(([topic, result]) => `
+      <div style="margin-top:14px">
+        <p><strong>${escapeHtml(topic)}</strong></p>
+        <p class="sub">Правильных ответов: ${result.r} из ${result.n}</p>
+        <button class="primary" onclick="show('${topicPages[topic]}')">
+          Изучить теорию по теме →
+        </button>
+      </div>
+    `).join("");
+} else {
+  recommendation.innerHTML =
+    '<p class="sub">Отличный результат! Ошибок в темах с доступной теорией нет.</p>';
+}
  $("reviewList").innerHTML=answers.map((a,i)=>`<article class="review-item"><h3>${i+1}. ${a.q.q}</h3><div class="q-meta"><span class="tag">${a.q.topic}</span><span class="tag">${difficulty(a.q.level)}</span><span class="tag" style="color:${a.correct?'var(--green)':'var(--red)'}">${a.correct?'Верно':'Неверно'}</span></div>${a.q.code?`<div class="code">${a.q.code.replace(/\\n/g,"\n")}</div>`:""}<div class="user-answer">Твой ответ: <b>${escapeHtml(a.answer)}</b> · Правильный ответ: <b>${Array.isArray(a.q.a)?a.q.a[0]:a.q.a}</b></div><div class="solution"><b>Разбор решения</b><br>${a.q.why}</div></article>`).join("");
 if(user){
  supabaseClient
