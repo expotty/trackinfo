@@ -156,7 +156,7 @@ canvas{width:100%;height:100%}
         <p>Интернет, адресация и поиск информации.</p>
       </div>
     </div>
-    <div class="topic-card">
+    <div class="topic-card" id="spreadsheetsCard" style="cursor:pointer">
       <div class="topic-icon">📊 </div>
       <div>
         <h3>Электронные таблицы</h3>
@@ -349,6 +349,88 @@ canvas{width:100%;height:100%}
     <div id="networkPracticeFeedback" style="margin-top:14px"></div>
     <button class="primary hidden" id="networkNextBtn" style="margin-top:16px">Следующее задание →</button>
     <div id="networkPracticeResult" class="hidden" style="margin-top:16px"></div>
+  </div>
+</section>
+<section id="spreadsheets" class="view hidden">
+  <div class="section-head">
+    <div>
+      <h2>Электронные таблицы</h2>
+      <div class="sub">Теоретический материал · ОГЭ по информатике</div>
+    </div>
+    <button class="ghost" id="spreadsheetsBack">Назад к темам</button>
+  </div>
+  <div class="panel">
+    <h3>Содержание</h3>
+    <ul>
+      <li><a href="#sheet-intro">Назначение электронных таблиц</a></li>
+      <li><a href="#sheet-cells">Структура таблицы</a></li>
+      <li><a href="#sheet-formulas">Формулы и функции</a></li>
+      <li><a href="#sheet-addressing">Адресация ячеек</a></li>
+      <li><a href="#sheet-errors">Типичные ошибки</a></li>
+      <li><a href="#spreadsheetPractice">Практика</a></li>
+    </ul>
+  </div>
+  <div class="panel" id="sheet-intro">
+    <h3>1. Назначение электронных таблиц</h3>
+    <p>Электронные таблицы — программы для хранения, обработки и анализа данных, представленных в виде таблиц.</p>
+    <p>Они позволяют выполнять вычисления, сортировать данные, строить диаграммы и использовать формулы.</p>
+    <p><strong>Примеры программ:</strong> Microsoft Excel, Google Таблицы, LibreOffice Calc.</p>
+  </div>
+  <div class="panel" id="sheet-cells">
+    <h3>2. Структура таблицы</h3>
+    <p>Таблица состоит из строк, столбцов и ячеек.</p>
+    <ul>
+      <li><strong>Строки</strong> обозначаются числами: 1, 2, 3...</li>
+      <li><strong>Столбцы</strong> обозначаются буквами: A, B, C...</li>
+      <li><strong>Ячейка</strong> — место пересечения строки и столбца.</li>
+      <li><strong>Диапазон</strong> — группа ячеек.</li>
+    </ul>
+    <p>Адрес ячейки состоит из буквы столбца и номера строки. Например, <strong>B3</strong>.</p>
+    <p>Диапазон <strong>A1:A5</strong> включает ячейки от A1 до A5.</p>
+  </div>
+  <div class="panel" id="sheet-formulas">
+    <h3>3. Формулы и функции</h3>
+    <p>Любая формула в электронной таблице начинается со знака <strong>=</strong>.</p>
+    <p>Примеры:</p>
+    <ul>
+      <li><code>=A1+B1</code> — сложение значений двух ячеек.</li>
+      <li><code>=A1*B1</code> — умножение.</li>
+      <li><code>=SUM(A1:A5)</code> — сумма значений диапазона.</li>
+      <li><code>=AVERAGE(A1:A5)</code> — среднее арифметическое.</li>
+      <li><code>=MAX(A1:A5)</code> — наибольшее значение.</li>
+      <li><code>=MIN(A1:A5)</code> — наименьшее значение.</li>
+    </ul>
+  </div>
+  <div class="panel" id="sheet-addressing">
+    <h3>4. Адресация ячеек</h3>
+    <p>При копировании формул адреса ячеек могут изменяться.</p>
+    <ul>
+      <li><strong>Относительная ссылка:</strong> A1 — изменяется при копировании формулы.</li>
+      <li><strong>Абсолютная ссылка:</strong> $A$1 — не изменяется при копировании.</li>
+    </ul>
+    <p>Знак $ фиксирует столбец или строку.</p>
+    <p>Например, если формулу с адресом A1 скопировать на одну строку ниже, ссылка изменится на A2.</p>
+  </div>
+  <div class="panel" id="sheet-errors">
+    <h3>5. Типичные ошибки</h3>
+    <ul>
+      <li>Забыть поставить знак = перед формулой.</li>
+      <li>Указать неправильный адрес ячейки.</li>
+      <li>Ошибиться при выборе диапазона.</li>
+      <li>Перепутать относительную и абсолютную ссылки.</li>
+      <li>Использовать числа, записанные как текст.</li>
+    </ul>
+  </div>
+  <div class="panel" id="spreadsheetPractice">
+    <h3>Проверь себя</h3>
+    <p>Как записать формулу для вычисления суммы значений ячеек от A1 до A5?</p>
+    <div id="spreadsheetAnswers" class="answers">
+      <button class="answer-btn" data-answer="1">SUM(A1:A5)</button>
+      <button class="answer-btn" data-answer="2">=SUM(A1:A5)</button>
+      <button class="answer-btn" data-answer="3">=A1+A5</button>
+      <button class="answer-btn" data-answer="4">A1:A5=SUM</button>
+    </div>
+    <div id="spreadsheetPracticeFeedback"></div>
   </div>
 </section>
 <section id="quiz" class="view hidden">
@@ -591,7 +673,7 @@ const questions = [
 let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
 let user = null;
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
-function show(id){["home","quiz","results","auth","theory","numberSystems","information","networks"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function show(id){["home","quiz","results","auth","theory","numberSystems","information","networks","spreadsheets"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
 function shuffle(array){
  const result=[...array];
@@ -844,6 +926,8 @@ $("informationCard").onclick=()=>show("information");
 $("informationBack").onclick=()=>show("theory");
 $("networksCard").onclick=()=>show("networks");
 $("networksBack").onclick=()=>show("theory");
+$("spreadsheetsCard").onclick=()=>show("spreadsheets");
+$("spreadsheetsBack").onclick=()=>show("theory");
 const numberQuestions = [
   {
     question: "Переведи число 1011₂ в десятичную систему.",
@@ -1058,6 +1142,16 @@ $("networkNextBtn").onclick = () => {
   }
 };
 renderNetworkQuestion();
+document.querySelectorAll("#spreadsheetAnswers .answer-btn").forEach(button=>{
+  button.onclick=()=>{
+    const feedback=$("spreadsheetPracticeFeedback");
+    if(button.dataset.answer==="2"){
+      feedback.innerHTML='<p style="color:#22a06b"><strong>Верно!</strong> Формула начинается со знака =, а SUM(A1:A5) вычисляет сумму значений диапазона.</p>';
+    }else{
+      feedback.innerHTML='<p style="color:#d97706"><strong>Пока неверно.</strong> Вспомни: любая формула начинается со знака =. Для суммы используется функция SUM.</p>';
+    }
+  };
+});
 $("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
 updateAuthUI();
 </script>
