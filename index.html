@@ -495,7 +495,7 @@ const questions = [
 let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
 let user = null;
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
-function show(id){["home","quiz","results","auth","theory","numberSystems"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function show(id){["home","quiz","results","auth","theory","numberSystems","information"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
 function shuffle(array){
  const result=[...array];
@@ -744,6 +744,8 @@ $("theoryBtn").onclick=()=>show("theory");
 $("theoryHomeBtn").onclick=()=>show("home");
 $("numberSystemsCard").onclick=()=>show("numberSystems");
 $("numberSystemsBack").onclick=()=>show("theory");
+$("informationCard").onclick=()=>show("information");
+$("informationBack").onclick=()=>show("theory");
 const numberQuestions = [
   {
     question: "Переведи число 1011₂ в десятичную систему.",
@@ -776,32 +778,24 @@ const numberQuestions = [
     explanation: "1 × 2² + 0 × 2¹ + 1 × 2⁰ = 4 + 0 + 1 = 5."
   }
 ];
-
 let numberCurrentQuestion = 0;
 let numberCorrectAnswers = 0;
 let numberAnswered = false;
-
 function renderNumberQuestion() {
   const q = numberQuestions[numberCurrentQuestion];
-
   $("numberQuestionCount").textContent =
     `Задание ${numberCurrentQuestion + 1} из ${numberQuestions.length}`;
-
   $("numberScore").textContent = `Баллы: ${numberCorrectAnswers}`;
   $("numberProgressBar").style.width =
     `${((numberCurrentQuestion + 1) / numberQuestions.length) * 100}%`;
-
   $("numberQuestion").textContent = q.question;
   $("numberPracticeFeedback").innerHTML = "";
   $("numberPracticeResult").classList.add("hidden");
   $("numberNextBtn").classList.add("hidden");
-
   numberAnswered = false;
-
   $("numberAnswers").innerHTML = q.answers.map(answer =>
     `<button class="secondary number-answer" data-answer="${answer}">${answer}</button>`
   ).join("");
-
   document.querySelectorAll(".number-answer").forEach(button => {
     button.onclick = () => {
       if (numberAnswered) return;
@@ -848,6 +842,16 @@ $("numberNextBtn").onclick = () => {
   }
 };
 renderNumberQuestion();
+document.querySelectorAll(".info-answer").forEach(button=>{
+  button.onclick=()=>{
+    const feedback=$("infoPracticeFeedback");
+    if(button.dataset.answer==="15"){
+      feedback.innerHTML='<p style="color:#22a06b"><strong>Верно!</strong> 15 × 8 = 120 бит. 120 : 8 = 15 байт.</p>';
+    }else{
+      feedback.innerHTML='<p style="color:#d97706"><strong>Пока неверно.</strong> Сначала умножь количество символов на 8 бит, затем переведи биты в байты.</p>';
+    }
+  };
+});
 $("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
 updateAuthUI();
 </script>
