@@ -950,6 +950,114 @@ document.querySelectorAll(".info-answer").forEach(button=>{
     }
   };
 });
+const networkQuestions = [
+  {
+    question: "Что такое локальная компьютерная сеть?",
+    answers: [
+      "Сеть, объединяющая устройства на небольшой территории",
+      "Всемирная сеть компьютеров",
+      "Программа для обработки информации",
+      "Способ хранения файлов"
+    ],
+    correct: "Сеть, объединяющая устройства на небольшой территории",
+    explanation: "Локальная сеть (LAN) объединяет устройства, например, в одном доме, школе или офисе."
+  },
+  {
+    question: "Как называется всемирная компьютерная сеть?",
+    answers: ["LAN", "Интернет", "Bluetooth", "Wi-Fi"],
+    correct: "Интернет",
+    explanation: "Интернет — глобальная система взаимосвязанных компьютерных сетей."
+  },
+  {
+    question: "Какое устройство соединяет разные сети и передаёт между ними данные?",
+    answers: ["Монитор", "Клавиатура", "Маршрутизатор", "Принтер"],
+    correct: "Маршрутизатор",
+    explanation: "Маршрутизатор (роутер) передаёт данные между сетями и помогает устройствам подключаться к Интернету."
+  },
+  {
+    question: "Сколько числовых частей содержит IPv4-адрес?",
+    answers: ["Две", "Три", "Четыре", "Пять"],
+    correct: "Четыре",
+    explanation: "IPv4-адрес состоит из четырёх чисел, разделённых точками. Например: 192.168.1.10."
+  },
+  {
+    question: "Что такое доменное имя?",
+    answers: [
+      "Название интернет-ресурса, удобное для человека",
+      "Пароль от компьютера",
+      "Тип компьютерной сети",
+      "Модель маршрутизатора"
+    ],
+    correct: "Название интернет-ресурса, удобное для человека",
+    explanation: "Доменное имя, например example.com, позволяет обращаться к интернет-ресурсам без запоминания IP-адреса."
+  }
+];
+let networkCurrentQuestion = 0;
+let networkCorrectAnswers = 0;
+let networkAnswered = false;
+function renderNetworkQuestion() {
+  const q = networkQuestions[networkCurrentQuestion];
+  $("networkQuestionCount").textContent =
+    `Задание ${networkCurrentQuestion + 1} из ${networkQuestions.length}`;
+  $("networkScore").textContent =
+    `Баллы: ${networkCorrectAnswers}`;
+  $("networkProgressBar").style.width =
+    `${((networkCurrentQuestion + 1) / networkQuestions.length) * 100}%`;
+  $("networkQuestion").textContent = q.question;
+  $("networkPracticeFeedback").innerHTML = "";
+  $("networkPracticeResult").classList.add("hidden");
+  $("networkNextBtn").classList.add("hidden");
+  networkAnswered = false;
+  $("networkAnswers").innerHTML = q.answers.map(answer =>
+    `<button class="secondary network-answer" data-answer="${answer}">${answer}</button>`
+  ).join("");
+  document.querySelectorAll(".network-answer").forEach(button => {
+    button.onclick = () => {
+      if (networkAnswered) return;
+      networkAnswered = true;
+      if (button.dataset.answer === q.correct) {
+        networkCorrectAnswers++;
+        $("networkPracticeFeedback").innerHTML =
+          `<p style="color:#22a06b"><strong>Верно!</strong> ${q.explanation}</p>`;
+      } else {
+        $("networkPracticeFeedback").innerHTML =
+          `<p style="color:#d97706"><strong>Неверно.</strong> Правильный ответ: ${q.correct}.</p><p>${q.explanation}</p>`;
+      }
+      $("networkScore").textContent =
+        `Баллы: ${networkCorrectAnswers}`;
+      $("networkNextBtn").textContent =
+        networkCurrentQuestion === networkQuestions.length - 1
+          ? "Посмотреть результат"
+          : "Следующее задание →";
+      $("networkNextBtn").classList.remove("hidden");
+    };
+  });
+}
+$("networkNextBtn").onclick = () => {
+  if (networkCurrentQuestion < networkQuestions.length - 1) {
+    networkCurrentQuestion++;
+    renderNetworkQuestion();
+  } else {
+    $("networkQuestion").textContent = "Тренировка завершена!";
+    $("networkAnswers").innerHTML = "";
+    $("networkPracticeFeedback").innerHTML = "";
+    $("networkNextBtn").classList.add("hidden");
+    $("networkProgressBar").style.width = "100%";
+    $("networkPracticeResult").innerHTML =
+      `<h3>Твой результат: ${networkCorrectAnswers} из ${networkQuestions.length}</h3>
+    <p>${networkCorrectAnswers === 5
+         ? "Отличная работа! Все задания выполнены правильно."
+         : "Хороший старт! Повтори материал и попробуй ещё раз."}</p>
+       <button class="primary" id="networkRestartBtn">Пройти ещё раз</button>`;
+    $("networkPracticeResult").classList.remove("hidden");
+    $("networkRestartBtn").onclick = () => {
+      networkCurrentQuestion = 0;
+      networkCorrectAnswers = 0;
+      renderNetworkQuestion();
+    };
+  }
+};
+renderNetworkQuestion();
 $("loginTab").onclick=()=>{authMode="login";updateAuthUI();};$("registerTab").onclick=()=>{authMode="register";updateAuthUI();};
 updateAuthUI();
 </script>
