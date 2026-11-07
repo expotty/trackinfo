@@ -149,7 +149,7 @@ canvas{width:100%;height:100%}
         <p>Объём информации, кодирование и единицы измерения.</p>
       </div>
     </div>
-    <div class="topic-card">
+    <div class="topic-card" id="networksCard" style="cursor:pointer">
       <div class="topic-icon">🌐 </div>
       <div>
         <h3>Компьютерные сети</h3>
@@ -263,6 +263,92 @@ canvas{width:100%;height:100%}
       <button class="secondary info-answer" data-answer="30">30 байт</button>
     </div>
     <div id="infoPracticeFeedback" style="margin-top:14px"></div>
+  </div>
+</section>
+<section id="networks" class="view hidden">
+  <div class="section-head">
+    <div>
+      <h2>Компьютерные сети</h2>
+      <div class="sub">Теоретический материал · ОГЭ по информатике</div>
+    </div>
+    <button class="ghost" id="networksBack">← К теории</button>
+  </div>
+  <div class="panel" style="margin-bottom:16px">
+    <h2>Содержание</h2>
+    <div class="topics">
+      <button class="secondary" onclick="document.getElementById('net-intro').scrollIntoView({behavior:'smooth'})">Введение</button>
+      <button class="secondary" onclick="document.getElementById('net-types').scrollIntoView({behavior:'smooth'})">Виды сетей</button>
+      <button class="secondary" onclick="document.getElementById('net-devices').scrollIntoView({behavior:'smooth'})">Сетевое оборудование</button>
+      <button class="secondary" onclick="document.getElementById('net-address').scrollIntoView({behavior:'smooth'})">IP-адрес</button>
+      <button class="secondary" onclick="document.getElementById('net-errors').scrollIntoView({behavior:'smooth'})">Типичные ошибки</button>
+      <button class="secondary" onclick="document.getElementById('networkPractice').scrollIntoView({behavior:'smooth'})">Практика</button>
+    </div>
+  </div>
+  <div class="panel" id="net-intro">
+    <div class="eyebrow" style="color:var(--primary)">ТЕМА 03</div>
+    <h1 style="font-size:30px;margin:10px 0">Что такое компьютерная сеть?</h1>
+    <p>Компьютерная сеть — это объединение компьютеров и других устройств, которые могут обмениваться данными и совместно использовать ресурсы.</p>
+    <p>Например, благодаря сети несколько компьютеров могут использовать один принтер или получать доступ к общим файлам.</p>
+  </div>
+  <div class="panel" id="net-types" style="margin-top:16px">
+    <h2>1. Виды компьютерных сетей</h2>
+    <p>По территории, которую охватывает сеть, выделяют несколько основных видов.</p>
+    <h3>Локальная сеть (LAN)</h3>
+    <p>Объединяет устройства на небольшой территории: в кабинете, школе, офисе или доме.</p>
+    <h3>Глобальная сеть (WAN)</h3>
+    <p>Объединяет устройства и локальные сети на больших расстояниях. Пример — Интернет.</p>
+    <h3>Интернет</h3>
+    <p>Всемирная система взаимосвязанных компьютерных сетей, которая позволяет обмениваться информацией по всему миру.</p>
+  </div>
+  <div class="panel" id="net-devices" style="margin-top:16px">
+    <h2>2. Сетевое оборудование</h2>
+    <p>Для подключения устройств и передачи данных используются специальные устройства.</p>
+    <h3>Маршрутизатор (роутер)</h3>
+    <p>Передаёт данные между разными сетями и помогает устройствам подключаться к Интернету.</p>
+    <h3>Коммутатор</h3>
+    <p>Соединяет устройства внутри локальной сети и передаёт данные нужному устройству.</p>
+    <h3>Сетевая карта</h3>
+    <p>Обеспечивает подключение компьютера к сети.</p>
+    <h3>Модем</h3>
+    <p>Преобразует сигналы для передачи данных по каналу связи.</p>
+  </div>
+  <div class="panel" id="net-address" style="margin-top:16px">
+    <h2>3. IP-адрес</h2>
+    <p>IP-адрес — это числовой адрес устройства в сети, который используется для передачи данных нужному получателю.</p>
+    <h3>Пример IPv4-адреса</h3>
+    <div class="note">
+      <strong>192.168.1.10</strong>
+      <p>IPv4-адрес состоит из четырёх чисел от 0 до 255, разделённых точками.</p>
+    </div>
+    <p>IP-адрес помогает определить, куда необходимо доставить данные в компьютерной сети.</p>
+    <h3>Доменное имя</h3>
+    <p>Доменное имя — удобное для человека название интернет-ресурса, например example.com. Оно связано с IP-адресом через систему DNS.</p>
+  </div>
+  <div class="panel" id="net-errors" style="margin-top:16px">
+    <h2>4. Типичные ошибки</h2>
+    <ul>
+      <li>Путать локальную и глобальную сети.</li>
+      <li>Считать, что Интернет и Wi-Fi — одно и то же. Wi-Fi — технология беспроводного подключения.</li>
+      <li>Путать маршрутизатор и коммутатор.</li>
+      <li>Забывать, что IPv4-адрес состоит из четырёх числовых частей.</li>
+      <li>Путать IP-адрес с доменным именем.</li>
+    </ul>
+  </div>
+  <div class="panel" id="networkPractice" style="margin-top:16px">
+    <h2>5. Проверь свои знания</h2>
+    <p class="sub">Ответь на пять вопросов по теме компьютерных сетей.</p>
+    <div class="progress-top">
+      <span id="networkQuestionCount">Задание 1 из 5</span>
+      <span id="networkScore">Баллы: 0</span>
+    </div>
+    <div class="progress">
+      <span id="networkProgressBar" style="width:20%"></span>
+    </div>
+    <h3 id="networkQuestion">Загрузка задания...</h3>
+    <div id="networkAnswers" class="topics" style="margin-top:16px"></div>
+    <div id="networkPracticeFeedback" style="margin-top:14px"></div>
+    <button class="primary hidden" id="networkNextBtn" style="margin-top:16px">Следующее задание →</button>
+    <div id="networkPracticeResult" class="hidden" style="margin-top:16px"></div>
   </div>
 </section>
 <section id="quiz" class="view hidden">
@@ -505,7 +591,7 @@ const questions = [
 let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
 let user = null;
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
-function show(id){["home","quiz","results","auth","theory","numberSystems","information"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function show(id){["home","quiz","results","auth","theory","numberSystems","information","networks"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
 function shuffle(array){
  const result=[...array];
@@ -756,6 +842,8 @@ $("numberSystemsCard").onclick=()=>show("numberSystems");
 $("numberSystemsBack").onclick=()=>show("theory");
 $("informationCard").onclick=()=>show("information");
 $("informationBack").onclick=()=>show("theory");
+$("networksCard").onclick=()=>show("networks");
+$("networksBack").onclick=()=>show("theory");
 const numberQuestions = [
   {
     question: "Переведи число 1011₂ в десятичную систему.",
