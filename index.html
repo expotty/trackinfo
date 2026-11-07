@@ -132,7 +132,7 @@ canvas{width:100%;height:100%}
         <p>Двоичная, десятичная и другие системы. Перевод чисел.</p>
       </div>
     </div>
-    <div class="topic-card">
+    <div class="topic-card" id="informationCard" style="cursor:pointer">
       <div class="topic-icon">💻 </div>
       <div>
         <h3>Информация и её кодирование</h3>
@@ -167,6 +167,92 @@ canvas{width:100%;height:100%}
         <p>Алгоритмы, исполнители, циклы и условия.</p>
       </div>
     </div>
+  </div>
+</section>
+<section id="information" class="view hidden">
+  <div class="section-head">
+    <div>
+      <h2>Информация и её кодирование</h2>
+      <div class="sub">Теоретический материал · ОГЭ по информатике</div>
+    </div>
+    <button class="ghost" id="informationBack">← К теории</button>
+  </div>
+  <div class="panel" style="margin-bottom:16px">
+    <h2>Содержание</h2>
+    <div class="topics">
+      <button class="secondary" onclick="document.getElementById('info-intro').scrollIntoView({behavior:'smooth'})">Введение</button>
+      <button class="secondary" onclick="document.getElementById('info-units').scrollIntoView({behavior:'smooth'})">Единицы информации</button>
+      <button class="secondary" onclick="document.getElementById('info-volume').scrollIntoView({behavior:'smooth'})">Объём информации</button>
+      <button class="secondary" onclick="document.getElementById('info-coding').scrollIntoView({behavior:'smooth'})">Кодирование</button>
+      <button class="secondary" onclick="document.getElementById('info-errors').scrollIntoView({behavior:'smooth'})">Типичные ошибки</button>
+      <button class="secondary" onclick="document.getElementById('info-practice').scrollIntoView({behavior:'smooth'})">Практика</button>
+    </div>
+  </div>
+  <div class="panel" id="info-intro">
+    <div class="eyebrow" style="color:var(--primary)">ТЕМА 02</div>
+    <h1 style="font-size:30px;margin:10px 0">Что такое информация?</h1>
+    <p>Информация — это сведения об окружающем мире, объектах, событиях и процессах, которые человек или компьютер может получать, хранить, передавать и обрабатывать.</p>
+    <p>В информатике информация представляется в виде данных. Компьютер работает с ними с помощью двоичного кода — последовательности нулей и единиц.</p>
+  </div>
+  <div class="panel" style="margin-top:16px" id="info-units">
+    <h2>1. Единицы измерения информации</h2>
+    <p>Минимальная единица информации — бит. Он может принимать одно из двух значений: 0 или 1.</p>
+    <div class="topic-result"><strong>1 бит</strong><span>0 или 1</span></div>
+    <div class="topic-result"><strong>1 байт</strong><span>8 бит</span></div>
+    <div class="topic-result"><strong>1 Кбайт</strong><span>1024 байта</span></div>
+    <div class="topic-result"><strong>1 Мбайт</strong><span>1024 Кбайта</span></div>
+    <div class="topic-result"><strong>1 Гбайт</strong><span>1024 Мбайта</span></div>
+    <p class="sub">Важно: в типичных школьных задачах ОГЭ используются соотношения, основанные на числе 1024.</p>
+  </div>
+  <div class="panel" style="margin-top:16px" id="info-volume">
+    <h2>2. Как вычислить объём информации?</h2>
+    <p>Если каждый символ кодируется одинаковым количеством бит, объём сообщения можно найти по формуле:</p>
+    <div class="code">I = K × i</div>
+    <p>Где:</p>
+    <ul>
+      <li><strong>I</strong> — информационный объём сообщения в битах;</li>
+      <li><strong>K</strong> — количество символов;</li>
+      <li><strong>i</strong> — количество бит на один символ.</li>
+    </ul>
+    <h3>Пример</h3>
+    <p>Сообщение содержит 20 символов. Каждый символ кодируется 8 битами. Найдём объём сообщения:</p>
+    <div class="code">I = 20 × 8 = 160 бит
+160 : 8 = 20 байт</div>
+    <p class="sub">Ответ: 160 бит, или 20 байт.</p>
+  </div>
+  <div class="panel" style="margin-top:16px" id="info-coding">
+    <h2>3. Кодирование информации</h2>
+    <p>Кодирование — это преобразование информации в форму, удобную для хранения, передачи или обработки.</p>
+    <p>Например, текст в компьютере представляется числовыми кодами символов. Изображения хранятся как набор пикселей, а звук — как цифровые данные.</p>
+    <h3>Равномерное кодирование</h3>
+    <p>При равномерном кодировании каждый символ занимает одинаковое количество бит.</p>
+    <div class="code">Если на символ отводится 8 бит,
+то 1 символ = 1 байт.
+10 символов = 10 × 8 = 80 бит.</div>
+    <h3>Неравномерное кодирование</h3>
+<p>При неравномерном кодировании разные символы могут иметь коды разной длины. Например, часто встречающимся символам можно назначать более короткие коды.</p>
+  </div>
+  <div class="panel" style="margin-top:16px" id="info-errors">
+    <h2>4. Типичные ошибки</h2>
+    <ul>
+      <li>Путаница между битами и байтами.</li>
+      <li>Забывают, что 1 байт = 8 бит.</li>
+      <li>Используют 1000 вместо 1024 в задачах, где требуется перевод между Кбайтами и байтами.</li>
+      <li>Забывают умножить количество символов на объём одного символа.</li>
+      <li>Не переводят результат в нужную единицу измерения.</li>
+    </ul>
+  </div>
+  <div class="panel" style="margin-top:16px" id="info-practice">
+    <div class="eyebrow" style="color:var(--primary)">ПРОВЕРЬ СЕБЯ</div>
+    <h2>Мини-тренировка</h2>
+    <p>Сообщение состоит из 15 символов. Каждый символ занимает 8 бит. Каков объём сообщения в байтах?</p>
+    <div class="topics">
+      <button class="secondary info-answer" data-answer="15">15 байт</button>
+      <button class="secondary info-answer" data-answer="120">120 байт</button>
+      <button class="secondary info-answer" data-answer="120bits">120 бит</button>
+      <button class="secondary info-answer" data-answer="30">30 байт</button>
+    </div>
+    <div id="infoPracticeFeedback" style="margin-top:14px"></div>
   </div>
 </section>
 <section id="quiz" class="view hidden">
