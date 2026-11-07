@@ -384,15 +384,15 @@ canvas{width:100%;height:100%}
     </div>
     <button class="ghost" id="spreadsheetsBack">Назад к темам</button>
   </div>
-<div class="panel">
-  <h3>Содержание</h3>
-  <div class="topic-nav">
-    <a href="#sheet-intro">01. Назначение электронных таблиц</a>
-    <a href="#sheet-cells">02. Структура таблицы</a>
-    <a href="#sheet-formulas">03. Формулы и функции</a>
-    <a href="#sheet-addressing">04. Адресация ячеек</a>
-    <a href="#sheet-errors">05. Типичные ошибки</a>
-    <a href="#spreadsheetPractice">06. Практика</a>
+<div class="panel" style="margin-bottom:16px">
+  <h2>Содержание</h2>
+  <div class="topics">
+    <button class="secondary" onclick="document.getElementById('sheet-intro').scrollIntoView({behavior:'smooth'})">Введение</button>
+    <button class="secondary" onclick="document.getElementById('sheet-cells').scrollIntoView({behavior:'smooth'})">Структура таблицы</button>
+    <button class="secondary" onclick="document.getElementById('sheet-formulas').scrollIntoView({behavior:'smooth'})">Формулы и функции</button>
+    <button class="secondary" onclick="document.getElementById('sheet-addressing').scrollIntoView({behavior:'smooth'})">Адресация ячеек</button>
+    <button class="secondary" onclick="document.getElementById('sheet-errors').scrollIntoView({behavior:'smooth'})">Типичные ошибки</button>
+    <button class="secondary" onclick="document.getElementById('spreadsheetPractice').scrollIntoView({behavior:'smooth'})">Практика</button>
   </div>
 </div>
   <div class="panel" id="sheet-intro">
