@@ -67,7 +67,13 @@ canvas{width:100%;height:100%}
 .review-item h3{font-size:15px;margin:0 0 8px}
 .review-item .solution{background:#f6f7fc;border-radius:10px;padding:12px;margin-top:10px;font-size:14px}
 .review-item .user-answer{font-size:13px;color:var(--muted)}
-.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.auth-grid{
+  display:grid;
+  grid-template-columns: minmax(0, 480px) minmax(0, 480px);
+  gap:20px;
+  justify-content:center;
+  align-items:center;
+}
 .auth-panel{max-width:480px;margin:auto;width:100%}
 .auth-panel input{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px;margin:6px 0 12px}
 .small{font-size:12px;color:var(--muted)}
