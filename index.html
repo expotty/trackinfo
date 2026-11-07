@@ -57,13 +57,12 @@ h2{font-size:22px;margin:0;letter-spacing:-.5px} .sub{color:var(--muted);font-si
 .feedback{margin-top:15px;padding:14px;border-radius:13px;font-size:14px}
 .feedback.good{background:#eaf8f1;color:#116c4a}.feedback.bad{background:#fff0f2;color:#a52f42}
 footer{padding:30px 0 10px;text-align:center;color:#8a91a6;font-size:12px}
-.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .results-grid {
-  align-items: start;
-}
-.results-grid > .panel {
-  align-self: start;
-  height: fit-content;
+  display: grid;
+  grid-template-columns: minmax(0, 480px) minmax(0, 480px);
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }
 .big-score{font-size:44px;font-weight:900;letter-spacing:-2px}
 .chart-wrap{height:230px;position:relative}
